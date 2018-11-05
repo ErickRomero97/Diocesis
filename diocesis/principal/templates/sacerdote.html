@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Dirección Sacerdotal{% endblock  %}
+{% load static %}
+
+{% block contenido %}
+	{% load static %}
+	<div class="scontenedor">
+		<img class="slogo" src="{% static 'img/ds1.png' %}" alt="">
+
+
+		{# este es el dinamico #}
+		<div class="row">
+			<div class="s1">
+				<div>
+					<img  class="eee" src="{% static 'img/s1.jpg' %}" alt="...">
+					<img class="marco" src="{% static 'img/m1.png' %}" alt="...">
+				</div>
+				<br>
+				<a href="#">
+					<h4>Joseph Rassinger</h4>
+					<p>Parroquia: San José, Nacaome</p>
+					<p></p>
+				</a>
+			</div>
+			
+			
+		</div>
+
+
+	</div>
+{% endblock  %}

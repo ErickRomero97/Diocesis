@@ -1,0 +1,524 @@
+html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+}
+
+
+body {
+      font-family: "Helvetica Neue",sans-serif, Arial;
+      font-weight: lighter;
+}
+
+
+.img-responsive {
+      width: 100%;
+}
+
+header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 0 100px;
+      background: rgba(0,0,0,0);
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 3;
+}
+
+header .logo{
+      height: 50px;
+      line-height: 30px;
+      width: 200px;
+      color: #FFF;
+      font-weight: bold;
+      float: left;
+}
+
+header nav{
+      float: right;
+}
+
+header nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+}
+
+header.black {
+      background: rgba(0, 0, 0, 0.50);
+}
+
+header nav ul li{
+      list-style: none;
+      position: relative;
+}
+
+header nav ul li.sub-menu:before{
+      content: '\f0d7';
+      font-family: fontAwesome;
+      position: absolute;
+      line-height: 50px;
+      color: #fff;
+      right: 5px;
+}
+
+header nav ul li.sub-menu.active:before{
+      content: '\f0d8';
+}
+header nav ul li ul{
+      position: absolute;
+      left: 0;
+      background: #333;
+      display: none;
+}
+
+header nav ul li.active ul{
+      display: block;
+}
+
+header nav ul li ul li{
+      display: block;
+      width: 200px;
+}
+
+header nav ul li a{
+      height: 50px;
+      line-height: 50px;
+      padding: 0 20px;
+      text-decoration: none;
+      color: white;
+      display: block;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active{
+      color: #fff;
+      background: #2196f3;
+}
+
+.menu-toggle{
+      color: #FFF;
+      float: right;
+      line-height: 50px;
+      cursor: pointer;
+      font-size: 24px;
+      display: none;
+}
+
+@media (max-width: 990px){
+      header {
+            padding: 0 20px;
+      }
+
+      .menu-toggle {
+            display: block;
+      }
+
+      header nav {
+            position: absolute;
+            width: 100%;
+            height: calc(100vh - 50px);
+            background: #333333;
+            top: 50px;
+            transition: 0.5s;
+            left: -100%;
+      }
+
+      header nav.active{
+            left: 0;
+      }
+
+      header nav ul {
+            display: block;
+            text-align: left;
+      }
+
+      header nav ul li a {
+            border-bottom: 1px solid rgba(0, 0, 0, .2);
+      }
+
+      header nav ul li.active ul{
+            position: relative;
+            background: #003e6f;
+      }
+
+      header nav ul li ul li{
+            width: 100%;
+      }
+
+}
+
+#pie ul li{
+      list-style: none;
+}
+
+#pie{
+      background: rgb(0, 153, 255);
+      text-align: center;
+      height: 100px;
+}
+
+
+
+/*twitter abajo*/
+#ms{
+      display: block;
+      position: relative;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: #262626;
+      margin: 0 10px;
+      transition: .5s;
+
+}
+
+#ms span{
+      position: absolute;
+      transition: transform  .5s;
+}
+
+#ms span:nth-child(1),
+#ms span:nth-child(3)
+{
+      width: 100%;
+      height: 1px;
+      background: #262626;
+}
+
+#ms span:nth-child(1){
+      top: 0;
+      left: 0;
+      transform-origin: right;
+}
+
+#ms:hover span:nth-child(1){
+      transform:  scaleX(0);
+      transform-origin: left;
+      transition: transform .5s;
+}
+
+
+#ms span:nth-child(3){
+      bottom: 0;
+      left: 0;
+      transform-origin: left;
+}
+
+#ms:hover span:nth-child(3){
+      transform:  scaleX(0);
+      transform-origin: right;
+      transition: transform .5s;
+}
+
+
+#ms span:nth-child(2),
+#ms span:nth-child(4)
+{
+      width: 1px;
+      height: 100%;
+      background: #262626;
+}
+
+#ms span:nth-child(2){
+      top: 0;
+      left: 0;
+      transform: scaleY(0);
+      transform-origin: bottom;
+}
+
+#ms:hover span:nth-child(2){
+      transform: scaleY(1);
+      transform-origin: top;
+      transition: transform .5s;
+}
+
+#ms span:nth-child(4){
+      top: 0;
+      right: 0;
+      transform: scaleY(0);
+      transform-origin: top;
+}
+
+#ms:hover span:nth-child(4){
+      transform: scaleY(1);
+      transform-origin: bottom;
+      transition: transform .5s;
+}
+
+
+.content {
+      width: 94%;
+      margin: 4em auto;
+      font-size: 20px;
+      line-height: 30px;
+      text-align: justify;
+}
+
+/*Parallax*/
+  
+#s1{
+      margin-top: -1px;
+      height: 10px;
+      width: 100%;
+      
+      background-size: cover;
+      display: table;
+      background-attachment: fixed;
+}
+
+#s2{
+      width: 100%;
+      background: rgb(255,255,255);
+      background-attachment: fixed;
+      padding: 10px 70px 10px 70px
+      
+}
+
+#s2 p{
+      width: 100%;
+}
+
+#s3{
+      height: 100vh;
+      width: 100%;
+      background-image: url(../img/2.jpg);
+      background-size: cover;
+      display: table;
+      background-attachment: fixed;
+}
+
+#s2 .pimg{
+      margin-right: 20px;  
+}
+
+
+/*Obispo*/
+#sss{
+      background: url(../img/123.jpg) no-repeat;
+      padding-top: 130px;
+      padding-left: 70px;
+      margin: 0 auto;
+      height: 100vh;
+      width: 100%;
+}
+
+#guyimg img{
+      height: 300px;
+      border-radius: 70px;
+}
+
+.bio{
+      text-align: justify;
+}
+
+
+/*sacerdotes*/
+.scontenedor{
+      background: url(../img/fsacerdotes.jpg) no-repeat;
+      height:100vh;
+      margin-top: -40px;
+
+}
+
+.s1{
+      margin-top: 30px;
+      margin-left: 30px;
+      display: inline-block;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      margin: 0 auto;
+}
+
+
+.s1 .marco{
+      height: 200px;
+      width: 200px;
+      margin-left: -37px;
+      margin-top: -37px;
+}
+
+.s1 .eee{
+      background-size: 100%;
+      border-radius: 100%;
+      width: 130px;
+      height: 130px; 
+      margin: 0 auto;
+}
+
+
+
+.slogo{
+      width: 500px;
+      margin-top: 90px;
+      margin-left: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*responsive index*/
+.pimg img
+{
+      width: 400px;
+}
+
+
+.bp{
+      margin-left: 230px;
+}
+
+
+
+@media screen and (max-width: 85em){
+      .pimg img{
+            width: 350px;
+            text-align: center;
+      }
+
+      .temap{
+            text-align: center;
+            margin-left: 10px;
+      }
+      
+      #bp{
+            margin-left: 0px;
+      }
+
+      #s2{
+            text-align: center;
+      }
+
+      #ptext{
+            text-align: justify;
+      }
+}
+
+@media screen and (max-width: 75em){
+      .pimg img{
+            width: 300px;
+            text-align: center;
+      }
+
+      .temap{
+            text-align: center;
+            margin-left: 10px;
+      }
+      
+      #bp{
+            margin-left: 0px;
+      }
+
+      #s2{
+            text-align: center;
+      }
+
+      #ptext{
+            text-align: justify;
+      }
+}
+
+@media screen and (max-width: 64em){
+      .pimg img{
+            width: 270px;
+            text-align: center;
+      }
+
+      .temap{
+            text-align: center;
+            margin-left: 10px;
+      }
+      
+      #bp{
+            margin-left: 0px;
+      }
+
+      #s2{
+            text-align: center;
+      }
+
+      #ptext{
+            text-align: justify;
+      }
+}
+
+
+
+@media screen and (max-width: 48em){
+      .pimg img{
+            width: 200px;
+            text-align: center;
+      }
+
+      .temap{
+            text-align: center;
+            margin-left: 10px;
+      }
+      
+      #bp{
+            margin-left: 0px;
+      }
+
+      #s2{
+            text-align: center;
+      }
+
+      #ptext{
+            text-align: justify;
+      }
+
+      #s2{
+            padding: 10px 40px 10px 40px
+            
+      }
+}
+
+
+@media screen and (max-width: 35em){
+      .pimg img{
+            width: 150px;
+            text-align: center;
+      }
+
+      .temap{
+            text-align: center;
+            margin-left: 10px;
+      }
+      
+      #bp{
+            margin-left: 0px;
+      }
+
+      #s2{
+            text-align: center;
+      }
+
+      #ptext{
+            text-align: justify;
+      }
+
+      #s2{
+            padding: 10px 20px 10px 20px
+            
+      }
+
+}
+
