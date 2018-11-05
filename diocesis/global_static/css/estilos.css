@@ -301,7 +301,7 @@ header nav ul li a.active{
 #sss{
       background: url(../img/123.jpg) no-repeat;
       padding-top: 130px;
-      padding-left: 70px;
+      
       margin: 0 auto;
       height: 100vh;
       width: 100%;
@@ -317,6 +317,12 @@ header nav ul li a.active{
 }
 
 
+
+
+
+
+
+
 /*sacerdotes*/
 .scontenedor{
       background: url(../img/fsacerdotes.jpg) no-repeat;
@@ -326,29 +332,26 @@ header nav ul li a.active{
 }
 
 .s1{
-      margin-top: 30px;
-      margin-left: 30px;
       display: inline-block;
       color: white;
-      padding: 10px;
       text-align: center;
-      margin: 0 auto;
+      margin-left: 50px;
+
 }
 
 
-.s1 .marco{
+.marco{
       height: 200px;
       width: 200px;
-      margin-left: -37px;
-      margin-top: -37px;
+      margin-left: -170px;
 }
 
-.s1 .eee{
+.eee{
       background-size: 100%;
       border-radius: 100%;
       width: 130px;
       height: 130px; 
-      margin: 0 auto;
+      margin-left: 30px;
 }
 
 
@@ -458,6 +461,15 @@ header nav ul li a.active{
       #ptext{
             text-align: justify;
       }
+
+      .scontenedor{
+            text-align: center;
+      }
+
+      .slogo{
+            margin-top: 100px;
+            width: 400px;
+      }
 }
 
 
@@ -488,6 +500,15 @@ header nav ul li a.active{
       #s2{
             padding: 10px 40px 10px 40px
             
+      }
+
+      .scontenedor{
+            text-align: center;
+      }
+
+      .slogo{
+            margin-top: 100px;
+            width: 350px;
       }
 }
 
@@ -520,5 +541,14 @@ header nav ul li a.active{
             
       }
 
+      .scontenedor{
+            text-align: center;
+      }
+
+      .slogo{
+            margin-top: 100px;
+            width: 350px;
+      }
+      
 }
 
