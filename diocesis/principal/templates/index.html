@@ -171,20 +171,49 @@
 		
 	</div>
 	<br>
-	<button type="button" class="btn btn-warning" style="margin-left: 1000px; width: 200px;">Ver Más</button>
+	<a href="{% url 'principal:publicaciones' %}"><button type="button" class="btn btn-warning" id="btnview">Ver Más</button></a>
 </section>
 
 <section class="content parallax" id="s3">
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-	</p>
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-	</p>
+	<div class="container" id="us">
+		<div class="row">
+			<div class="col-md-3 usp">
+				<img src="{% static 'img/logo1-1.png' %}" alt="....">
+				<h4>+140</h4>
+				<hr>
+				<h4>Sacerdotes</h4>
+			</div>
+			<div class="col-md-3 usp">
+				<img src="{% static 'img/logo1-2.png' %}" alt="....">
+				<h4>+140</h4>
+				<hr>
+				<h4>Parrooquia</h4>
+			</div>
+			<div class="col-md-3 usp">
+				<img src="{% static 'img/logo1-3.png' %}" alt="....">
+				<h4>+140</h4>
+				<hr>
+				<h4>Pastorales</h4>
+			</div>
+		</div>
+			Telefono: 9999-9999
+			Email: asjasd@gmail.com
+
+		<div class="pie-fig" style="margin-top:30px">
+			<ul>
+				<li><a id="ms" href="#">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<i class="fa fa-twitter" aria-hidden="true"></i>
+					</a>
+				</li>	
+			</ul>
+			
+		</div>
+	
+	</div>
 </section>
 
 
@@ -215,7 +244,7 @@
 
 
 {# emergente del Login #}
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -225,9 +254,18 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
+	      	<div class="container" style="width: 60%;" placeholder="Ingrese el nombre de usuario...">
+		      	Nombre de Usuario
+		      	<input type="text" class="form-control">
+		      	<br>
+		      	Contraseña
+		      	<input type="text" class="form-control">
+		      	<br>
+	      		
+	      	</div>
 	        <form  action="#" method="post">
 	        	<div class="col-md-12">
-	        		
+	   
 					<input type="submit" value="Ingresar" class="btn btn-success">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 	        	</div>

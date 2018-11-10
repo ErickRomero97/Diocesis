@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block titulo %}Diócesis - Publicaciones{% endblock  %}
+
+
+{% block contenido %}
+{% load  static %}
+	<div class="container pub2">
+		<div class=" publicacion row">
+		
+		<div class="pimg col-md-4">
+			<img src="{% static '/img/jmj.png' %}" alt="..." >
+		</div>
+		<div class="col-md-7">
+			<div class="temap">
+				<h3>Rumbo a la JMJ Panamá 2019</h3>
+				<button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button>
+				<button type="button" class="btn btn-danger">Eliminar</button>
+			</div>
+			<hr>
+
+			<p id ="ptext">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
+			</p>
+		</div>
+		
+	</div>
+	</div>
+{% endblock  %}

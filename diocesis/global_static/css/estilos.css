@@ -149,16 +149,6 @@ header nav ul li a.active{
 
 }
 
-#pie ul li{
-      list-style: none;
-}
-
-#pie{
-      background: rgb(0, 153, 255);
-      text-align: center;
-      height: 100px;
-}
-
 
 
 /*twitter abajo*/
@@ -284,7 +274,7 @@ header nav ul li a.active{
 }
 
 #s3{
-      height: 100vh;
+      height: 480px;
       width: 100%;
       background-image: url(../img/2.jpg);
       background-size: cover;
@@ -315,13 +305,6 @@ header nav ul li a.active{
 .bio{
       text-align: justify;
 }
-
-
-
-
-
-
-
 
 /*sacerdotes*/
 .scontenedor{
@@ -362,22 +345,54 @@ header nav ul li a.active{
       margin-left: 20px;
 }
 
+#us{
+      margin-top: 40px;
+      color: white;
+      background: rgba(0,0,0,0.5);
+      padding: 30px;
+      border-radius: 5px;
+}
+
+.usp img{
+      width: 150px;
+}
+
+#us ul li{
+      list-style: none;
+}
+
+
+#us .usp{
+      text-align: center;
+      margin-left: 65px;
+      display: block;
+}
 
 
 
 
+#pie{
+      background: rgb(0, 153, 255);
+      text-align: center;
+      height: 100px;
+      
+}
 
 
 
+.pie-derechos{
+      margin-top: 40px;
+}
 
 
 
+/*publicaciones*/
 
-
-
-
-
-
+.pub2
+{
+      margin-top: 50px;
+      
+}
 /*responsive index*/
 .pimg img
 {
@@ -389,6 +404,10 @@ header nav ul li a.active{
       margin-left: 230px;
 }
 
+#btnview{
+      float: right;
+      width: 200px;
+}
 
 
 @media screen and (max-width: 85em){
@@ -413,6 +432,10 @@ header nav ul li a.active{
       #ptext{
             text-align: justify;
       }
+
+      #btnview{
+            float: right;
+      }
 }
 
 @media screen and (max-width: 75em){
@@ -436,6 +459,10 @@ header nav ul li a.active{
 
       #ptext{
             text-align: justify;
+      }
+
+      #btnview{
+            float: right;
       }
 }
 
@@ -469,6 +496,10 @@ header nav ul li a.active{
       .slogo{
             margin-top: 100px;
             width: 400px;
+      }
+
+      #btnview{
+            margin-left: 0; 
       }
 }
 
@@ -510,6 +541,10 @@ header nav ul li a.active{
             margin-top: 100px;
             width: 350px;
       }
+
+      #btnview{
+            margin-left: 0; 
+      }
 }
 
 
@@ -548,6 +583,18 @@ header nav ul li a.active{
       .slogo{
             margin-top: 100px;
             width: 350px;
+      }
+
+      #btnview{
+            margin-left: 0; 
+      }
+
+      #us .usp{
+            margin-left: 0
+      }
+
+      #us{
+            text-align: center;
       }
       
 }

@@ -15,3 +15,6 @@ def obispo(request):
 def sacerdote(request):
 	return render(request, 'sacerdote.html', )
 
+def publicaciones(request):
+	return render(request, 'publicaciones.html', )
+
