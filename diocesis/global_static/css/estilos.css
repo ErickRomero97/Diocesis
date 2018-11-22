@@ -243,7 +243,6 @@ header nav ul li a.active{
 
 .content {
       width: 94%;
-      margin: 4em auto;
       font-size: 20px;
       line-height: 30px;
       text-align: justify;
@@ -282,10 +281,10 @@ header nav ul li a.active{
       background-attachment: fixed;
 }
 
-#s2 .pimg{
+/* #s2 .pimg{
       margin-right: 20px;  
 }
-
+ */
 
 /*Obispo*/
 #sss{

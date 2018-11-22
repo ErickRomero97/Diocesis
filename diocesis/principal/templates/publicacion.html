@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
-{% block titulo %}Diócesis - Publicaciones{% endblock  %}
-
+{% block titulo %} {% endblock %}
 
 {% block contenido %}
-{% load  static %}
+	{% load static %}
 	<div id="carousel-1" class="carousel slide" data-ride="carousel">
 		<!-- Indicadores -->
 		<ol class="carousel-indicators" style="z-index: 1;">
@@ -48,52 +47,30 @@
 			</a>
 		</div>
 	</div><br>
-	<div class="container">
 	<section class="content">
-		{% for publicacion in publicaciones %}
-			<div class="publicacion row">		
-				<div class="pimg col-md-4 col-md-offset-1">
-					<img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.nombre }}" style="width: 100%;">
-				</div>
-				<div class="col-md-7">
-					<div class="temap">
-						<h3><a href="{% url 'principal:publicacion' publicacion.id %}">{{ publicacion.nombre}}</a></h3>
-						{% if request.user.is_active %}
-							<a href="#" class="btn btn-info btnEditar" id="bp" data-toggle="modal" data-target="#editarPublicacion" data-id="{{ publicacion.id }}" data-url="{% url 'principal:obtener_publicacion' %}">Editar</a>
-							<a href="#" data-href="{% url 'principal:eliminar_publicacion' publicacion.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar</a>							
-						{% endif %}
-					</div>
-					<hr>
-
-					<p id ="ptext">
-						{{publicacion.contenido}}
-					</p>
-				</div>		
+		<div class="publicacion row">	
+			<div class="pimg col-md-3 col-md-offset-1">
+				<img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.nombre }}">
 			</div>
-			<hr>
-		{% endfor %}
-	</section>
-		{% if publicaciones.has_next or publicaciones.has_previous %}
-            <ul class="pagination">
-                {% if publicaciones.has_previous %}
-                    <li><a href="?page={{ publicaciones.previous_page_number }}" class="btn btnpages"><i
-                            class="glyphicon glyphicon-chevron-left"></i></a></li>
-                {% endif %}
-                {% for page in publicaciones.paginator.page_range %}
-                    <li class="{% if publicaciones.number == page %}active{% endif %}">
-                        <a class="btn btnpages" href="?page={{ page }}">{{ page }}</a></li>
-                {% endfor %}
+			<div class="col-md-6 col-md-offset-1">
+				<div class="temap">
+					<h1>{{ publicacion.nombre}}</h1>
+					{% if request.user.is_active %}
+						<a href="" class="btn btn-info btnEditar" id="bp" data-toggle="modal" data-target="#editarPublicacion" data-id="{{ publicacion.id }}" data-url="{% url 'principal:obtener_publicacion' %}">Editar</a>
+						<a href="#" data-href="{% url 'principal:eliminar_publicacion' publicacion.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar</a>
+					{% endif %}
+				</div>
+				<hr>
 
-                {% if publicaciones.has_next %}
-                    <li>
-                        <a href="?page={{ publicaciones.next_page_number }}" class="btn btnpages">
-                            <i class="glyphicon glyphicon-chevron-right"></i>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        {% endif %}
-	</div>
+				<p id ="ptext">
+					{{ publicacion.contenido|linebreaks}}
+				</p>
+			</div>		
+		</div>
+		<br>
+	</section>
+		
+	</section>
 
 {# Modal de editar publicacion #}
 <div class="modal fade" id="editarPublicacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -142,4 +119,4 @@
 		</div>
 	</div>
 </div>
-{% endblock  %}
+{% endblock %}

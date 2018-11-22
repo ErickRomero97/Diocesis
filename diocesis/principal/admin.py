@@ -2,5 +2,15 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+admin.site.register(Cargo)
+admin.site.register(Municipio)
+admin.site.register(Empleado)
+admin.site.register(Publicacion)
+admin.site.register(Pastoral)
+admin.site.register(Parroquia)
+admin.site.register(Homilia)
+admin.site.register(Diocesi)
+
+

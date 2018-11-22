@@ -60,117 +60,34 @@
 {# borren los cuatro sobrantes y lo hacen con el for #}
 
 <section class="content parallax " id="s2" >
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" style="margin-top: -100px; margin-left:50px;">Nueva Publicación</button>
-		<div class="publicacion row">
-
-		<div class="pimg col-md-4">
-			<img src="{% static '/img/jmj.png' %}" alt="..." >
-		</div>
-		<div class="col-md-7">
-			<div class="temap">
-				<h3>Rumbo a la JMJ Panamá 2019</h3>
-				<button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button>
-				<button type="button" class="btn btn-danger">Eliminar</button>
+	{% if request.user.is_active %}
+		<h1>Bienvenido {{request.user.first_name}}</h1>
+		<hr><br>
+		<button type="button" class="btn btn-success" data-toggle="modal" data-target="#formPublicacion" style="margin-top: -90px; float: center;">Nueva Publicación</button>
+	{% endif %}
+	{% for publicacion in publicaciones %}
+		<div class="publicacion row">		
+			<div class="pimg col-md-3 col-md-offset-1">
+				<img src="{{ publicacion.imagen.url }}" alt="..." >
 			</div>
-			<hr>
+			<div class="col-md-6 col-md-offset-1">
+				<div class="temap">
+					<h3><a href="{% url 'principal:publicacion' publicacion.id %}">{{ publicacion.nombre}}</a></h3>
+					{% if request.user.is_active %}
+						<!-- <button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button> -->
+						<a href="" class="btn btn-info btnEditar" id="bp" data-toggle="modal" data-target="#editarPublicacion" data-id="{{ publicacion.id }}" data-url="{% url 'principal:obtener_publicacion' %}">Editar</a>
+						<a href="#" data-href="{% url 'principal:eliminar_publicacion' publicacion.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar</a>
+					{% endif %}
+				</div>
+				<hr>
 
-			<p id ="ptext">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-			</p>
-			</div>
-		<br>
-		
-	</div>
-	<div class=" publicacion row">
-		
-		<div class="pimg col-md-4">
-			<img src="{% static '/img/jmj.png' %}" alt="..." >
+				<p id="ptext">
+					{{ publicacion.contenido|linebreaks }}
+				</p>
+			</div>		
 		</div>
-		<div class="col-md-7">
-			<div class="temap">
-				<h3>Rumbo a la JMJ Panamá 2019</h3>
-				<button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button>
-				<button type="button" class="btn btn-danger">Eliminar</button>
-			</div>
-			<hr>
-
-			<p id ="ptext">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-			</p>
-		</div>
-		
-	</div>
-	<br>
-	<div class=" publicacion row">
-		
-		<div class="pimg col-md-4">
-			<img src="{% static '/img/jmj.png' %}" alt="..." >
-		</div>
-		<div class="col-md-7">
-			<div class="temap">
-				<h3>Rumbo a la JMJ Panamá 2019</h3>
-				<button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button>
-				<button type="button" class="btn btn-danger">Eliminar</button>
-			</div>
-			<hr>
-
-			<p id ="ptext">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-			</p>
-		</div>
-		
-	</div>
-	<br>
-	<div class=" publicacion row">
-		
-		<div class="pimg col-md-4">
-			<img src="{% static '/img/jmj.png' %}" alt="..." >
-		</div>
-		<div class="col-md-7">
-			<div class="temap">
-				<h3>Rumbo a la JMJ Panamá 2019</h3>
-				<button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button>
-				<button type="button" class="btn btn-danger">Eliminar</button>
-			</div>
-			<hr>
-
-			<p id ="ptext">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-			</p>
-		</div>
-		
-	</div>
-	<br>
-	<div class=" publicacion row">
-		
-		<div class="pimg col-md-4">
-			<img src="{% static '/img/jmj.png' %}" alt="..." >
-		</div>
-		<div class="col-md-7">
-			<div class="temap">
-				<h3>Rumbo a la JMJ Panamá 2019</h3>
-				<button type="button" class="btn btn-info" id="bp" data-toggle="modal" data-target="#exampleModal">Editar</button>
-				<button type="button" class="btn btn-danger">Eliminar</button>
-			</div>
-			<hr>
-
-			<p id ="ptext">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus assumenda pariatur esse eveniet ad fugit perferendis incidunt magnam rem. Recusandae veritatis ducimus dolor dignissimos eligendi sunt, tempore. Veritatis, labore, assumenda?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas beatae dolorum quos corporis perferendis est, cupiditate error! Vitae earum explicabo labore veritatis, architecto, reiciendis assumenda neque quisquam doloremque porro?
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex optio a commodi aspernatur, earum omnis, est asperiores, enim dolor quos repellat dolorem tenetur neque ducimus. Maxime omnis ipsa ad? Dignissimos.
-			</p>
-		</div>
-		
-	</div>
-	<br>
+		<hr>
+	{% endfor %}	
 	<a href="{% url 'principal:publicaciones' %}"><button type="button" class="btn btn-warning" id="btnview">Ver Más</button></a>
 </section>
 
@@ -220,61 +137,99 @@
 
 
 {# esto es de la modal, forulario emergente de las publicaciones#}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
+<div class="modal fade" id="formPublicacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Nueva publicación</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <form  action="#" method="post">
-	        	<div class="col-md-12">
-	        		
-					<input type="submit" value="Publicar" class="btn btn-success">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        	</div>
-			</form>
-	      </div>
+	     	<div class="modal-header">
+	        	<h5 class="modal-title" id="exampleModalLabel">Nueva publicación</h5>
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	         		<span aria-hidden="true">&times;</span>
+	       		</button>
+		        <form action="{% url 'principal:nueva_publicacion' %}" method="post" enctype="multipart/form-data">
+		        	{% csrf_token %}
+		        	<div class="panel-body">
+			        	{{ publicacionForm.as_p}}
+			        </div>
+			        <div class="panel-footer">
+			        	<input type="submit" class="btn btn-success" value="Guardar">
+			        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			        </div>
+		        </form>
+	    	</div>
 	    </div>
-	  </div>
 	</div>
+</div>
 
+{# Modal de editar publicacion #}
+<div class="modal fade" id="editarPublicacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	     	<div class="modal-header">
+	        	<h5 class="modal-title" id="exampleModalLabel">Editar publicación</h5>
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	         		<span aria-hidden="true">&times;</span>
+	       		</button>
+		        <form action="{% url 'principal:editar_publicacion' %}" method="post" enctype="multipart/form-data">
+		        	{% csrf_token %}
+		        	<div class="panel-body">
+		        		<input type="hidden" id="id_pub" name="id_pub">
+			        	{{ editarForm.as_p}}
+			        	<input type="hidden" id="id_empleado" name="empleado">
+			        	<input type="hidden" id="id_fecha" name="fecha">
+			        </div>
+			        <div class="panel-footer">
+			        	<input type="submit" class="btn btn-success" value="Guardar">
+			        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			        </div>
+		        </form>
+	    	</div>
+	    </div>
+	</div>
+</div>
 
+{# Modal de confirmar eliminacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea eliminar este registro?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-danger btn-ok">Eliminar</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {# emergente del Login #}
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Inicio de Sesión</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+      </div>
+	  <form action="{% url 'principal:login' %}" method="post">
+	  	{% csrf_token %}
 	      <div class="modal-body">
-	      	<div class="container" style="width: 60%;" placeholder="Ingrese el nombre de usuario...">
-		      	Nombre de Usuario
-		      	<input type="text" class="form-control">
-		      	<br>
-		      	Contraseña
-		      	<input type="text" class="form-control">
-		      	<br>
-	      		
+	      	<div class="container" style="width: 60%;">
+		      	{{form.as_p}}				      	
 	      	</div>
-	        <form  action="#" method="post">
-	        	<div class="col-md-12">
-	   
-					<input type="submit" value="Ingresar" class="btn btn-success">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        	</div>
-			</form>
 	      </div>
-	    </div>
-	  </div>
-	</div>
-
-
-	
+	      <div class="modal-footer">
+	      	<input type="submit" value="Ingresar" class="btn btn-success">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>			      		      		
+	    </form>
+    </div>
+  </div>
+</div>	
 {% endblock %}
