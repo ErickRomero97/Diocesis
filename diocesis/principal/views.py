@@ -164,3 +164,6 @@ def eliminar_publicacion(request, id):
 	publicacion.delete()
 
 	return HttpResponseRedirect(reverse('principal:index'))
+
+def contacto(request):
+	return render(request, 'contactanos.html', )

@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^$', views.index, name = 'index'),
 	url(r'^obispo/$', views.obispo, name = 'obispo'),
 	url(r'^sacerdotes/$', views.sacerdote, name = 'sacerdote'),
+	url(r'^contacto/$', views.contacto, name = 'contacto'),
 	url(r'^publicaciones/$', views.publicaciones, name = 'publicaciones'),
 	url(r'^publicacion/(?P<id>\d+)/$', views.publicacion, name = 'publicacion'),
 	url(r'^login/$', views.log_in, name = 'login'),

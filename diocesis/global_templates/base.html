@@ -30,7 +30,7 @@
 					</ul>
 				</li>
 				<li><a href="#">Homil&iacute;as</a></li>
-				<li><a href="#">Contactanos</a></li>
+				<li><a href="{% url 'principal:contacto' %}">Contactanos</a></li>
 			</ul>
 		</nav>
 		<div class="menu-toggle">
@@ -43,13 +43,19 @@
 		
 	{% endblock  %}
 
-	<footer class="parallax" id="pie" style="text-align: center; margin: 0 auto;">
-			<div class="pie-derechos" style="margin-top: 40px">
-				<h6>Derechos Reservados &copy 2018</h6>
+	<footer class="parallax" id="pie" style="text-align: center;">
+			<div class="pie-derechos" >
+				<br>
+				<h4>Derechos Reservados &copy 2018</h4>
 				{% if request.user.is_active %}
-					<a href="{% url 'principal:logout' %}">salir</a>
+					<a href="{% url 'principal:logout' %}"><img src="{% static 'img/salir.png' %}" alt=".." style="width:30px;"></a>
+					<br>
+					SALIR
 				{% else %}
-					<a href="" data-toggle="modal" data-target="#loginModal">Entrar</a>				
+						
+					<a href="" data-toggle="modal" data-target="#loginModal"><img src="{% static 'img/entrar.png' %}" alt=".." style="width:30px;"></a>
+					<br>
+					ENTRAR			
 				{% endif %}			
 			</div>			
 	</footer>
