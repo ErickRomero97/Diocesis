@@ -59,14 +59,14 @@
 					<div class="temap">
 						<h3><a href="{% url 'principal:publicacion' publicacion.id %}">{{ publicacion.nombre}}</a></h3>
 						{% if request.user.is_active %}
-							<a href="#" class="btn btn-info btnEditar" id="bp" data-toggle="modal" data-target="#editarPublicacion" data-id="{{ publicacion.id }}" data-url="{% url 'principal:obtener_publicacion' %}">Editar</a>
-							<a href="#" data-href="{% url 'principal:eliminar_publicacion' publicacion.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar</a>							
+							<a href="#" class="btn btn-info btnEditar" id="bp" data-toggle="modal" data-target="#editarPublicacion" data-id="{{ publicacion.id }}" data-url="{% url 'principal:obtener_publicacion' %}">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+							<a href="#" data-href="{% url 'principal:eliminar_publicacion' publicacion.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>							
 						{% endif %}
 					</div>
 					<hr>
 
 					<p id ="ptext">
-						{{publicacion.contenido}}
+						{{publicacion.contenido|linebreaks|truncatechars:500}} <a href="{% url 'principal:publicacion' publicacion.id %}">Leer m&aacute;s</a>
 					</p>
 				</div>		
 			</div>

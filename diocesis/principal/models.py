@@ -24,7 +24,7 @@ class  Municipio(models.Model):
 @python_2_unicode_compatible
 class  Depto(models.Model):
 	depto = models.CharField(max_length=30)
-	municipio = models.ForeignKey(Municipio)
+	municipio = models.ManyToManyField(Municipio)
 	def __str__(self):
 		return self.depto
 
@@ -93,20 +93,23 @@ class Parroquia(models.Model):
 	telefono = models.CharField(max_length=20)
 	direccion = models.TextField()
 	imagen= models.ImageField(upload_to = 'parroquia')
-	empleado= models.OneToOneField(Empleado)
+	empleado= models.ForeignKey(Empleado)
 	pastoral=models.ManyToManyField(Pastoral)
 	municipio=models.ForeignKey(Municipio)
+
 	def __str__(self):
 		return "{} ,{}" .format(self.nombre,self.municipio)
 
 #Modelo de Homilia
 @python_2_unicode_compatible
 class  Homilia(models.Model):
+	titulo = models.CharField(max_length=200)
+	parroquia=models.ForeignKey(Parroquia)
+	fecha = models.DateField()
+	hora = models.TimeField()
 	contenido = models.TextField()
 	empleado =  models.ForeignKey(Empleado)
-	hora = models.TimeField()
-	fecha = models.DateField()
-	parroquia=models.ForeignKey(Parroquia)
+
 	def __str__(self):
 		return "{} {}-{}" .format(self.empleado,self.hora,self.fecha)
 
@@ -125,7 +128,24 @@ class  Diocesi(models.Model):
 	def __str__(self):
 		return "{} {}" .format(self.nombre,self.empleado)
 
+@python_2_unicode_compatible
+class Imagen(models.Model):
+	imagen = models.ImageField(upload_to="galeria")
 
+	def __str__(self):
+		return "{}" .format(self.imagen)
+		
+	class Meta:
+		verbose_name_plural = 'Imagenes'
+
+@python_2_unicode_compatible
+class Album(models.Model):
+	nombre_album = models.CharField(max_length=100)
+	fecha_pub = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Publicacion')
+	imagen = models.ManyToManyField(Imagen, blank=True)
+
+	def __str__(self):
+		return "{}" .format(self.nombre_album)
 
 
 
