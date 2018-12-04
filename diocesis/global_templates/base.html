@@ -25,13 +25,24 @@
 					<ul>
 						<li><a href="{% url 'principal:obispo' %}">Nuesto obispo</a></li>
 						<li><a href="{% url 'principal:sacerdote' %}">Directorio sacerdotal</a></li>
-						<li><a href="#">Parroquias</a></li>
-						<li><a href="#">Pastorales</a></li>
+						<li><a href="{% url 'principal:parroquia' %}">Parroquias</a></li>
+						<li><a href="{% url 'principal:pastoral' %}">Pastorales / Parroquia</a></li>
 						<li><a href="{% url 'principal:homilia' %}">Homil&iacute;as</a></li>
 					</ul>
 				</li>
 				<li><a href="{% url 'principal:galeria' %}">Galer&iacute;a</a></li>
 				<li><a href="{% url 'principal:contacto' %}">Cont&aacute;ctanos</a></li>
+				{% if request.user.is_active %}
+					<li class="sub-menu"><a href="#">Configuraciones</a>
+						<ul>{% if request.user.is_staff  %}
+								<li><a href="{% url 'principal:usuario' %}"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
+								<li><a href="{% url 'principal:empleado' %}">Empleados</a></li>
+								<li><a href="{% url 'principal:parroquia_admin' %}">Parroquias</a></li>
+							{% endif %}
+							<li><a href="{% url 'principal:estudio' %}"><span class="glyphicon glyphicon-education"></span> Estudios</a></li>
+						</ul>
+					</li>
+				{% endif %}
 			</ul>
 		</nav>
 		<div class="menu-toggle">
@@ -86,5 +97,8 @@
 	        }
 	  })	  
   	</script>
+  	{% block script %}
+  		
+  	{% endblock  %}
 </body>
 </html>

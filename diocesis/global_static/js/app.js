@@ -92,4 +92,210 @@ $(function(){
 			$('#id_contenido').val(data.contenido);
 		})
 	})
+
+
+	//desactivar el obispo actual
+	$('#btn_dObispo').on('click', function(){
+		var id = $(this).attr('data-id');
+		var url = $(this).attr('data-url');
+		var btn=$(this);
+		$.get(url, {'id':id},function(data){
+			$(btn).html(data.action);
+			$('#data_Obispo').fadeOut();
+			$('#nuevo_Obispo').fadeIn();
+
+
+		}, 'json');
+
+	});
+
+	var _ID = 0;
+	$(document).on('click', '.btn_pastoral', function(){
+			_ID = $(this).attr('data-id');
+	})
+	//eliminar pastoral
+	$('#btn_dPastoral').on('click', function(){
+		
+
+		var url = $(this).attr('data-url');
+		var btn=$(this);
+		$.get(url, {'id':_ID},function(data){
+			$('#data_Pastoral-'+_ID).fadeOut()
+		}, 'json');
+
+	});
+
+
+	//activar usuarios del sistema
+	$('.btn-user').on('click', function(){
+		var id = $(this).attr('data-id');
+		var url = $(this).attr('data-url');
+		var btn=$(this);
+		$.get(url, {'id':id},function(data){
+			$(btn).html(data.action);
+			$('#estado-' + id).text(data.valor);
+			if (data.action == 'Activar'){
+				$(btn).removeClass('btn btn-danger');
+				$(btn).addClass('btn btn-success');
+			}else{
+				$(btn).removeClass('btn btn-success');
+				$(btn).addClass('btn btn-danger');
+			}		
+		}, 'json');
+
+	});
+
+	//Agregar Usuarios al sistema
+	$('#frmUsuario').on('submit', function(e){
+		if ($(this).attr('data-id').toString().trim() ==''){
+			e.preventDefault();
+
+			var url = $(this).attr('action');
+
+			$.post(url, $(this).serialize(), function(data){
+				$('#add_usuario').append(data.response);
+				$('#id_username').val('').focus();
+				$('#id_password1').val('');
+				$('#id_password2').val('');
+			}, 'json');
+		}
+	});
+
+
+	//agregar empleados al sistema
+	$('#frmEmpleado').on('submit', function(e){
+		if ($(this).attr('data-id').toString().trim() ==''){
+			e.preventDefault();
+			var url = $(this).attr('action');
+			var data = new FormData($('#frmEmpleado').get(0));
+
+			$.ajax({
+				url: url,
+				type: $(this).attr('method'),
+				data: data,
+				cache: false,
+				processData: false,
+				contentType: false,
+				success: function(data) {
+				    $('#add_empleado').append(data.response);
+					$('#id_numero_identidad').val('').focus();
+					$('#id_nombre').val('');
+					$('#id_apellido').val('');
+					$('#id_fecha_nac').val('');
+					$('#id_fecha_ord').val('');
+					$('#id_telefono').val('');
+					$('#id_direccion').val('');
+					$('#id_biografia').val('');
+					$('#id_correo').val('');
+					$('#id_imagen').val('');
+					$('#id_sexo').val('');
+					$('#id_cargo').val('');
+					$('#id_user').val('');
+				}
+			});
+		}
+		
+	});
+
+	//activar empleados del sistema
+	$('.btn-empleado').on('click', function(){
+		var id = $(this).attr('data-id');
+		var url = $(this).attr('data-url');
+		var btn=$(this);
+		$.get(url, {'id':id},function(data){
+			$(btn).html(data.action);
+			$('#estado-' + id).text(data.valor);
+			if (data.action == 'Activar'){
+				$(btn).removeClass('btn btn-danger');
+				$(btn).addClass('btn btn-success');
+			}else{
+				$(btn).removeClass('btn btn-success');
+				$(btn).addClass('btn btn-danger');
+			}		
+		}, 'json');
+
+	});
+
+	//Agregar Estudios al sistema
+	$('#frmEstudio').on('submit', function(e){
+		if ($(this).attr('data-id').toString().trim() ==''){
+			e.preventDefault();
+
+			var url = $(this).attr('action');
+
+			$.post(url, $(this).serialize(), function(data){
+				$('#add_estudio').append(data.response);
+				$('#id_nombre').val('').focus();
+				$('#id_lugar').val('');
+				$('#id_periodo').val('');
+			}, 'json');
+		}
+	});
+
+	//eliminar los Estudios del sistema
+	$('.btn-destudio').on('click', function(){
+		var id = $(this).attr('data-id');
+		var url = $(this).attr('data-url');
+		var btn=$(this);
+		$.get(url, {'id':id},function(data){
+			$(btn).html(data.action);
+			$('#d_estudio-'+ id).fadeOut();
+			
+		}, 'json');
+
+	});
+
+	//activar parroquias del sistema
+	$('.btn-Aparroquia').on('click', function(){
+		var id = $(this).attr('data-id');
+		var url = $(this).attr('data-url');
+		var btn=$(this);
+		$.get(url, {'id':id},function(data){
+			$(btn).html(data.action);
+			$('#estado-' + id).text(data.valor);
+			if (data.action == 'Activar'){
+				$(btn).removeClass('btn btn-danger');
+				$(btn).addClass('btn btn-success');
+			}else{
+				$(btn).removeClass('btn btn-success');
+				$(btn).addClass('btn btn-danger');
+			}		
+		}, 'json');
+
+	});
+
+	//agregar Parroquias al sistema
+	$('#frmParroquia').on('submit', function(e){
+		if ($(this).attr('data-id').toString().trim() ==''){
+			e.preventDefault();
+			var url = $(this).attr('action');
+			var data = new FormData($('#frmParroquia').get(0));
+
+			$.ajax({
+				url: url,
+				type: $(this).attr('method'),
+				data: data,
+				cache: false,
+				processData: false,
+				contentType: false,
+				success: function(data) {
+				    $('#add_parroquia').append(data.response);
+					$('#id_nombre').val('').focus();
+					$('#id_descripcion').val('');
+					$('#id_telefono').val('');
+					$('#id_direccion').val('');
+					$('#id_imagen').val('');
+					$('#id_empleado').val('');
+					$('#id_municipio').val('');
+				}
+			});
+		}
+		
+	});
+
+
+
+
+
+	
 })

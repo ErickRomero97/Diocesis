@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block titulo %}Empleados{% endblock  %}
+{% load static %}
+
+{% block contenido %}
+	<div class="scontenedor">
+		<div class="container">
+			<br>	
+			<br>
+			<br>	
+			<br>	
+			<br>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formEmpleado">Nuevo Empleado <span class="glyphicon glyphicon-plus"></span></button>	
+			<h2>Lista de Empleados</h2>
+			<div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th># IDENTIDAD</th>
+							<th>NOMBRE</th>
+							<th>TELEFONO</th>
+							<th>DIRECCIÓN</th>
+							<th>ACTIVO</th>
+							<th>CORREO</th>
+							<th>CARGO</th>
+							<th><span class="glyphicon glyphicon-wrench"></span> OPCIÓNES</th>
+						</tr>
+					</thead>
+					<tbody id="add_empleado">
+						{% for e, a in empleado  %}
+							<tr>
+								<td>{{e.numero_identidad}}</td>
+								<td>{{e.nombre}} {{e.apellido}}</td>
+								<td>{{e.telefono}}</td>
+								<td>{{e.direccion}}</td>
+								<td><span id="estado-{{e.id}}">{{e.estado}}</span></td>
+								<td>{{e.correo}}</td>
+								<td>{{e.cargo}}</td>
+								<td>
+									<div class="btn-group">
+										  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu">
+								  	 		<a  style="margin-left:30px; "
+								    			class="btn btn-info" href="{% url 'principal:empleado_editar' e.id %}"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
+											{% if a == 'si' %}
+												<button class="btn btn-danger btn-empleado"
+														data-id="{{e.id}}"
+														data-url="{% url 'principal:empleado_desactivar' %}"
+														style="margin-left:30px; margin-top:5px">Desactivar</button>
+											{% else %}
+												<button class="btn btn-success btn-empleado"
+													data-id="{{e.id}}"
+													data-url="{% url 'principal:empleado_desactivar' %}"
+													style="margin-left:30px; margin-top:5px">Activar</button>
+											{% endif %}
+										  </ul>
+									</div>
+								</td>
+							</tr>
+						{% empty %}
+							<div class="alert alert-danger" role="alert">
+								<p>
+									No hay Empleados Disponibles
+								</p>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- Modal de Nuevo Empleado y actualizar Empleado -->
+	<div class="modal fade" id="formEmpleado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos del Empleado</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form id="frmEmpleado" data-id="{{pk}}" {% if pk %}
+			        			action="{% url 'principal:empleado_editar_guardar' %}"
+			        		{% else %}
+			        			action="{% url 'principal:empleado_guardar' %}"
+			        		{% endif %}
+							method="post">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+				        		<input name="id" value="{{pk}}" type="hidden">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+	
+{% endblock  %}
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formEmpleado').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}
+

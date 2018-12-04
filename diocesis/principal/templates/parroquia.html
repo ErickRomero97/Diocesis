@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+	Directorio Parroquial
+{% endblock  %}
+
+
+{% block contenido %}
+	
+	<div class="container row" id="sss">
+		{% if request.user.is_staff%}
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formObispo">Nueva Parroquia <span class="glyphicon glyphicon-plus"></span></button><br><br>
+		{% endif %}
+		<div class="container">
+				<div class="row">
+					{% for p in parroquia  %}
+					  <div class="col-sm-6 col-md-4">
+					    <div class="thumbnail">
+					      <img  class="eee" src="/media/{{p.imagen}}" alt="...">
+					      <div class="caption">
+					        <h3><strong>Nombre: </strong>{{p.nombre}}</h3>
+					        <h4><strong>Telefono: </strong>{{p.telefono}}</h4>
+					        <h3><strong>Dirección: </strong>{{p.direccion}}</h3>
+					        <a href="{% url 'principal:sacerdote_ver' p.empleado.id %}">
+					        	<h3><strong>Párroco: </strong>{{p.empleado.nombre}} {{p.empleado.apellido}}</h3>
+					        </a>
+					        {% if request.user.is_staff %}
+					        	 <p><a href="{% url 'principal:parroquia_ver' p.id %}" 
+								   		class="btn btn-warning"  
+								   		>Ver Más <span class="glyphicon glyphicon-eye-open"></span>
+									</a>
+					        	</p>
+					        {% endif %}
+					      </div>
+					    </div>
+					  </div>
+				  	{% empty %}
+				</div>
+				<br>
+				<div class="alert alert-danger" role="alert">
+					<p>
+						No hay Parroquias Disponibles.
+					</p>
+				</div>
+			{% endfor %}
+		</div>
+		
+	</div>
+	<!-- Modal de Nueva Parroquia -->
+	<div class="modal fade" id="formObispo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos de la Parroquia</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form action="{% url 'principal:parroquia_guardar' %}"
+							method="post" enctype="multipart/form-data">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+	{# Modal de confirmar desactivacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Desactivar Obispo</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea desactivar al Obispo Actual?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button data-id="{{empleado.id}}"
+							data-url="{% url 'principal:obispo_desactivar'%}"
+							class="btn btn-danger"
+							id="btn_dObispo" 
+							data-toggle="modal" data-target="#confirm-delete">
+							Desactivar 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	
+{% endblock  %}
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formObispo').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}

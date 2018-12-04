@@ -28,6 +28,15 @@ class  Depto(models.Model):
 	def __str__(self):
 		return self.depto
 
+#Modelo Estudios
+@python_2_unicode_compatible
+class  Estudio(models.Model):
+	nombre = models.CharField(max_length=30)
+	lugar = models.CharField(max_length=50)
+	periodo = models.CharField(max_length=20)
+	def __str__(self):
+		return "{} {} - {}" .format(self.nombre,self.lugar,self.periodo)
+
 
 #Modelo de Empleados
 @python_2_unicode_compatible
@@ -43,13 +52,16 @@ class Empleado(models.Model):
 	fecha_ord =  models.DateField(verbose_name='Fecha de Ordenacion',null=True,blank=True)
 	telefono = models.CharField(max_length=20)
 	direccion = models.TextField()
-	biografia = models.TextField()
+	biografia = models.TextField(null=True,blank=True)
 	correo = models.EmailField()
 	estado_obispo= models.BooleanField(default=False)
+	estado_sacerdote= models.BooleanField(default=False)
+	estado= models.BooleanField(default=True)
 	imagen = models.ImageField(upload_to = 'empleado')
 	sexo = models.CharField(max_length=10, choices=SEXOS)
 	cargo = models.ForeignKey(Cargo)
-	user = models.OneToOneField(User)
+	estudios= models.ManyToManyField(Estudio)
+	user = models.OneToOneField(User,null=True,blank=True)
 
 	def __str__(self):
 		return "{} - {} {}" .format(self.numero_identidad,self.nombre, self.apellido)
@@ -70,19 +82,29 @@ class Publicacion(models.Model):
 
 
 
+#Modelo de Pastorales_Diocesis
+@python_2_unicode_compatible
+class  Pastoral_Diocesi(models.Model):
+	nombre = models.CharField(max_length=30)
+
+	class Meta:
+		verbose_name_plural='Pastorales_Diocesis'
+	def __str__(self):
+		return "{}" .format(self.nombre)
+
 #Modelo de Pastorales
 @python_2_unicode_compatible
 class  Pastoral(models.Model):
-	nombre = models.CharField(max_length=30)
+	nombre = models.ForeignKey(Pastoral_Diocesi)
 	encargado =  models.CharField(max_length=30)
 	horarios = models.CharField(max_length=30)
-	eslogan=models.CharField(max_length=30)
+	eslogan=models.TextField()
 	imagen = models.ImageField(upload_to='pastorales')
 
 	class Meta:
 		verbose_name_plural='Pastorales'
 	def __str__(self):
-		return "{}" .format(self.nombre)
+		return "{}, encargado: {}" .format(self.nombre,self.encargado)
 
 
 #Modelo de Parroquia
@@ -96,9 +118,10 @@ class Parroquia(models.Model):
 	empleado= models.ForeignKey(Empleado)
 	pastoral=models.ManyToManyField(Pastoral)
 	municipio=models.ForeignKey(Municipio)
+	estado = models.BooleanField(default=True)
 
 	def __str__(self):
-		return "{} ,{}" .format(self.nombre,self.municipio)
+		return "{}" .format(self.nombre)
 
 #Modelo de Homilia
 @python_2_unicode_compatible
@@ -123,7 +146,7 @@ class  Diocesi(models.Model):
 	imagen = models.ImageField(upload_to='diocesis')
 	parroquia=models.ManyToManyField(Parroquia)
 	empleado=models.ForeignKey(Empleado)
-	pastoral=models.ManyToManyField(Pastoral)
+	pastoral=models.ManyToManyField(Pastoral_Diocesi)
 
 	def __str__(self):
 		return "{} {}" .format(self.nombre,self.empleado)

@@ -9,43 +9,40 @@
 			<img class="slogo" src="{% static 'img/ds1.png' %}" alt="">
 			
 		</div>
-
-
-		{# este es el dinamico #}
-		<div class="container" id="s1">
-
-
-			<div class="s1">
-				<a href="#">
-				<div>
-					<img  class="eee" src="{% static 'img/s1.jpg' %}" alt="...">
-					<img class="marco" src="{% static 'img/m1.png' %}" alt="...">
-				</div>
-				<br>
-				
-					<h4>Joseph Rassinger</h4>
-					<p>Parroquia: San José, Nacaome</p>
-					<p></p>
-				</a>
-			</div>
-
-			<div class="s1">
-				<a href="#">
-				<div>
-					<img  class="eee" src="{% static 'img/s2.jpg' %}" alt="...">
-					<img class="marco" src="{% static 'img/m1.png' %}" alt="...">
-				</div>
-				<br>
-				
-					<h4>Joseph Ratzinger</h4>
-					<p>Parroquia: San José, Nacaome</p>
-					<p></p>
-				</a>
-			</div>
+		<br>
+		<div class="container">
 			
+				<div class="row">
+					{% for p in parroquia  %}
+					  <div class="col-sm-6 col-md-4">
+					    <div class="thumbnail">
+					      <img  class="eee" src="/media/{{p.empleado.imagen}}" alt="...">
+					      <div class="caption">
+					        <h3><strong>Nombre: </strong>{{p.empleado.nombre}} {{p.empleado.apellido}}</h3>
+					        <h4><strong>Telefono: </strong>{{p.empleado.telefono}}</h4>
+					        <a href="{% url 'principal:parroquia_ver' p.id %}">
+					        	 <h3><strong>Parroquia: </strong>{{p.nombre}}</h3>
+					        </a>
+					        {% if request.user.is_staff %}
+					        	 <p><a href="{% url 'principal:sacerdote_ver' p.empleado.id %}" 
+								   		class="btn btn-warning"  
+								   		>Ver Mas <span class="glyphicon glyphicon-eye-open"></span>
+									</a>
+					        	</p>
+					        {% endif %}
+					      </div>
+					    </div>
+					  </div>
+				  {% empty %}
+				</div>
 			
+				<br>
+				<div class="alert alert-danger" role="alert">
+					<p>
+						No hay Sacerdotes Disponibles.
+					</p>
+				</div>
+			{% endfor %}
 		</div>
-
-
 	</div>
 {% endblock  %}

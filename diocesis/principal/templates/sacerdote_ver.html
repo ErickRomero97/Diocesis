@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+	Sacerdote {{empleado.nombre}} {{empleado.apellido}}
+{% endblock%}
+
+
+{% block contenido %}
+	<div class="container row" id="sss">
+		<div id="add_Obispo">
+			<div class="col-md-3" id="guyimg">
+				<img src="/media/{{empleado.imagen}}" alt="...">
+			</div>
+			<div class="bio col-md-8" style="margin-left: 90px;">
+				<h1>{{empleado.nombre}} {{empleado.apellido}}</h1>
+				<hr>
+				<h4>Datos Personales del Sacerdote</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>TELEFONO</th>
+							<th>DIRECCION</th>
+							<th>CORREO</th>
+							<th>FECHA ORDENACION</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{empleado.telefono}}</td>
+							<td>{{empleado.direccion}} </td>
+							<td>{{empleado.correo}}</td>
+							<td>{{empleado.fecha_ord}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3>Biografia</h3>
+				<hr>
+				<p>{{empleado.biografia}}</p>
+				<h3>Estudios</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>NOMBRE</th>
+							<th>LUGAR</th>
+							<th>PERIODO</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for e in empleado.estudios.all%}
+							<tr>
+								<td>{{forloop.counter}}</td>
+								<td>{{e.nombre}} </td>
+								<td>{{e.lugar}}</td>
+								<td>{{e.periodo}}</td>
+							</tr>
+						{% empty %}
+							<div class="alert alert-danger" role="alert">
+								<p>
+									No hay Estudios
+								</p>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if request.user.is_staff %}
+					<a href="{% url 'principal:sacerdote_editar' empleado.id %}" 
+					   class="btn btn-info"  
+					   >Editar <span class="glyphicon glyphicon-pencil"></span></a>
+					<button data-toggle="modal" 
+							data-target="#confirm-delete"
+							class="btn btn-danger">
+							Desactivar <span class="glyphicon glyphicon-remove"></span>
+					</button>
+
+				{% endif %}
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- Modal de Actualizar Sacerdote-->
+	<div class="modal fade" id="formSacerdote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos del Sacerdote {{empleado.nombre}} {{empleado.apellido}} </h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form action="{% url 'principal:sacerdote_editar_guardar' empleado.id %}"
+							method="post" enctype="multipart/form-data">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+				        		<input name="id" value="{{pk}}" type="hidden">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+	{# Modal de confirmar desactivacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Desactivar Sacerdote</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea desactivar al Sacerdote?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<a href="{% url 'principal:sacerdote_desactivar' empleado.id %}"
+						class="btn btn-danger">
+						Desactivar 
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formSacerdote').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}

@@ -1,38 +1,139 @@
 {% extends "base.html" %}
 
-{% block titulo %}Obispo - Guy Charbonneau{% endblock  %}
+{% block titulo %}
+	Obispo  {{empleado.nombre}} {{empleado.apellido}}
+{% endblock  %}
 
 
 {% block contenido %}
 	
-	{% load static %}
-
 	<div class="container row" id="sss">
-		<div class="col-md-3" id="guyimg">
-			<img src="{% static '/img/guy2.png' %}" alt="...">
+		<div id="nuevo_Obispo">
+			{% if request.user.is_staff and estado %}
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formObispo">Nuevo Obispo <span class="glyphicon glyphicon-plus"></span></button><br><br>
+				<h2>{{empleado}}</h2>
+			{% endif %}
 		</div>
-		<div class="bio col-md-8" style="margin-left: 90px;">
-			<img src="{% static 'img/nameguy.png' %}" alt="..." style="width: 500px;">
-			<hr>
-			<p>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid voluptas obcaecati minus magnam dolorum reiciendis error mollitia numquam, consequuntur maiores nam ad veritatis eum quas repellat delectus maxime fugiat at.
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero similique sit autem maxime dolorum facere cum minus necessitatibus ex illo beatae praesentium nisi veniam quam fugiat magnam, laborum architecto. Saepe?....
-
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, voluptatem necessitatibus asperiores maxime veritatis natus dolores sapiente. Perspiciatis, pariatur, dolorem dolores odio vel reiciendis asperiores aperiam nulla expedita, voluptate assumenda.
-
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus autem recusandae rerum distinctio quaerat deserunt quibusdam ullam, eum non aliquam quisquam reiciendis sed vero architecto enim atque, nihil fuga provident?
-			
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid voluptas obcaecati minus magnam dolorum reiciendis error mollitia numquam, consequuntur maiores nam ad veritatis eum quas repellat delectus maxime fugiat at.
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero similique sit autem maxime dolorum facere cum minus necessitatibus ex illo beatae praesentium nisi veniam quam fugiat magnam, laborum architecto. Saepe?....
-
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, voluptatem necessitatibus asperiores maxime veritatis natus dolores sapiente. Perspiciatis, pariatur, dolorem dolores odio vel reiciendis asperiores aperiam nulla expedita, voluptate assumenda.
-
-
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, voluptatem necessitatibus asperiores maxime veritatis natus dolores sapiente. Perspiciatis, pariatur, dolorem dolores odio vel reiciendis asperiores aperiam nulla expedita, voluptate assumenda.
-
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus autem recusandae rerum distinctio quaerat deserunt quibusdam ullam, eum non aliquam quisquam reiciendis sed vero architecto enim atque, nihil fuga provident?
-			</p>
+		
+		{% if not estado  %}
+		<div id="data_Obispo">
+			<div class="col-md-3" id="guyimg">
+				<img src="/media/{{empleado.imagen}}" alt="...">
+			</div>
+			<div class="bio col-md-8" style="margin-left: 90px;">
+				<h1>{{empleado.nombre}} {{empleado.apellido}}</h1>
+				<hr>
+				<p>{{empleado.biografia}}</p>
+				<h3>Estudios</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>NOMBRE</th>
+							<th>LUGAR</th>
+							<th>PERIODO</th>
+						</tr>
+					</thead>
+					<tbody >
+						{% for e in empleado.estudios.all  %}
+							<tr>
+								<td>{{forloop.counter}}</td>
+								<td>{{e.nombre}} </td>
+								<td>{{e.lugar}}</td>
+								<td>{{e.periodo}}</td>
+							</tr>
+						{% empty %}
+							<div class="alert alert-danger" role="alert">
+								<p>
+									No hay Estudios
+								</p>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if request.user.is_staff %}
+					<a href="{% url 'principal:obispo_editar' empleado.id %}" 
+					   class="btn btn-info"  
+					   >Editar <span class="glyphicon glyphicon-pencil"></span></a>
+					<button data-toggle="modal" 
+							data-target="#confirm-delete"
+							class="btn btn-danger">
+							Desactivar <span class="glyphicon glyphicon-remove"></span>
+					</button>
+					<a href="{% url 'principal:obispo_ver' empleado.id %}" class="btn btn-warning">Ver Mas</a>
+				{% endif %}
+			</div>
+		</div>	
+		{% endif %}
+		
+	</div>
+	<!-- Modal de Nuevo Obispo y actualizar obispo -->
+	<div class="modal fade" id="formObispo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos del Obispo</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form {% if pk  %}
+			        		 	action="{% url 'principal:obispo_editar_guardar' %}"
+			        		 {% else %}
+								action="{% url 'principal:obispo_guardar' %}"
+							{% endif %}
+							method="post" enctype="multipart/form-data">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+				        		<input name="id" value="{{pk}}" type="hidden">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
 		</div>
 	</div>
+	{# Modal de confirmar desactivacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Desactivar Obispo</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea desactivar al Obispo Actual?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button data-id="{{empleado.id}}"
+							data-url="{% url 'principal:obispo_desactivar'%}"
+							class="btn btn-danger"
+							id="btn_dObispo" 
+							data-toggle="modal" data-target="#confirm-delete">
+							Desactivar 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
 	
 {% endblock  %}
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formObispo').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block titulo %}Estudios{% endblock  %}
+{% load static %}
+
+{% block contenido %}
+	<div class="scontenedor">
+		<div class="container">
+			<br>	
+			<br>
+			<br>	
+			<br>	
+			<br>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formEstudio">Nuevo Estudio <span class="glyphicon glyphicon-plus"></span></button>	
+			<h2>Lista de Estudios</h2>
+			<div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th><span class="glyphicon glyphicon-th-list"></span></th>
+							<th>ESTUDIO</th>
+							<th>LUGAR</th>
+							<th><span class="glyphicon glyphicon-time"></span> PERIODO</th>
+							<th><span class="glyphicon glyphicon-wrench"></span> OPCIÓNES</th>
+						</tr>
+					</thead>
+					<tbody id="add_estudio">
+						{% for e in estudio %}
+							<tr id="d_estudio-{{e.id}}">
+								<td>{{forloop.counter}}</td>
+								<td>{{e.nombre}}</td>
+								<td>{{e.lugar}}</td>
+								<td>{{e.periodo}}</td>
+								<td>
+									<div class="btn-group">
+										  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+										  </button>
+										  <ul class="dropdown-menu">
+								  	 		<a  style="margin-left:30px; "
+								    			class="btn btn-info" href="{% url 'principal:estudio_editar' e.id %}"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
+												<button class="btn btn-danger btn-destudio"
+														data-id="{{e.id}}"
+														data-url="{% url 'principal:estudio_eliminar' %}"
+														style="margin-left:30px; margin-top:5px"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
+										  </ul>
+									</div>
+								</td>
+							</tr>
+						{% empty %}
+							<div class="alert alert-danger" role="alert">
+								<p>
+									No hay Estudios Disponibles
+								</p>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- Modal de Nuevo Estudio y actualizar Estudio -->
+	<div class="modal fade" id="formEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos de los Estudios</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form id="frmEstudio" data-id="{{pk}}" {% if pk %}
+			        			action="{% url 'principal:estudio_editar_guardar' %}"
+			        		{% else %}
+			        			action="{% url 'principal:estudio_guardar' %}"
+			        		{% endif %}
+							method="post">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+				        		<input name="id" value="{{pk}}" type="hidden">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+	
+{% endblock  %}
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formEstudio').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}
+

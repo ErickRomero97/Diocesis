@@ -10,10 +10,12 @@ admin.site.register(Depto)
 admin.site.register(Empleado)
 admin.site.register(Publicacion)
 admin.site.register(Pastoral)
+admin.site.register(Pastoral_Diocesi)
 admin.site.register(Parroquia)
 admin.site.register(Homilia)
 admin.site.register(Diocesi)
 admin.site.register(Imagen)
 admin.site.register(Album)
+admin.site.register(Estudio)
 
 

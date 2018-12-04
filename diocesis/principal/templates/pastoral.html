@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block titulo %}Pastorales{% endblock  %}
+{% load static %}
+
+{% block contenido %}
+	{% load static %}
+	<div class="scontenedor">
+		<div class="container">
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			{% if request.user.is_active%}
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formPastoral">Nueva Pastoral <span class="glyphicon glyphicon-plus"></span></button>
+				<br><br>
+			{% endif %}
+			
+				<div class="row">
+					{% for p in pastoral  %}
+						<div class="col-sm-6 col-md-4" id="data_Pastoral-{{p.pk}}">
+						    <div class="thumbnail">
+						      <img  class="eee" src="/media/{{p.imagen}}" alt="...">
+						      <div class="caption">
+						        <h3><strong>Nombre: </strong>{{p.nombre}}</h3>
+						        <h4><strong>Encargado: </strong>{{p.encargado}}</h4>
+						        <h4><strong>Eslogan: </strong>{{p.eslogan}}</h4>
+						        <h4><strong>Horarios: </strong>{{p.horarios}}</h4>
+						        {% if p.parroquia_set.all.last	 %}
+						        	<a href="{% url 'principal:parroquia_ver' p.parroquia_set.all.last.id %}">
+						      	 		<h3><strong>Parroquia: </strong>{{p.parroquia_set.all.last.nombre}}</h3>
+						      		</a>
+						        {% endif %}
+						      
+						        {% if request.user.is_staff %}
+						        	 <a href="{% url 'principal:pastoral_editar' p.id %}" 
+							   			class="btn btn-info"  
+							   			>Editar <span class="glyphicon glyphicon-pencil"></span></a>
+									<button data-id="{{p.id}}"
+											data-toggle="modal" 
+											data-target="#confirm-delete"
+											class="btn btn-danger btn_pastoral">
+											Eliminar <span class="glyphicon glyphicon-remove"></span>
+									</button>
+						        {% endif %}
+						      </div>
+						    </div>
+						</div>
+				  {% empty %}
+				</div>
+			
+				<br>
+				<div class="alert alert-danger" role="alert">
+					<p>
+						No hay Pastorales Disponibles.
+					</p>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<!-- Modal de Nueva Pastoral y actualizar Pastoral -->
+	<div class="modal fade" id="formPastoral" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos de la Pastoral</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form {% if pk  %}
+			        		 	action="{% url 'principal:pastoral_editar_guardar' %}"
+			        		 {% else %}
+								action="{% url 'principal:pastoral_guardar' %}"
+							{% endif %}
+							method="post" enctype="multipart/form-data">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+				        		<input name="id" value="{{pk}}" type="hidden">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+	{# Modal de confirmar desactivacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Eliminar Pastoral</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea eliminar esta Pastoral?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button data-url="{% url 'principal:pastoral_desactivar'%}"
+							class="btn btn-danger"
+							id="btn_dPastoral" 
+							data-toggle="modal" data-target="#confirm-delete">
+							Desactivar 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock  %}
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formPastoral').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}

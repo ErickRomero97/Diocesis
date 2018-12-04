@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+	Parroquia {{parroquia.nombre}}
+{% endblock%}
+
+
+{% block contenido %}
+	<div class="container row" id="sss">
+		<div id="add_Obispo">
+			<div class="col-md-3" id="guyimg">
+				<img src="/media/{{parroquia.imagen}}" alt="...">
+			</div>
+			<div class="bio col-md-8" style="margin-left: 90px;">
+				<h1>{{parroquia.nombre}}</h1>
+				<br>
+				<p>
+					{{parroquia.descripcion}}
+				</p>
+				<hr>
+				<h4>Datos de la Parroquia</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>TELEFONO</th>
+							<th>DIRECCION</th>
+							<th>PARROCO</th>
+							<th>MUNICIPIO</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{parroquia.telefono}}</td>
+							<td>{{parroquia.direccion}} </td>
+							<td>{{parroquia.empleado.nombre}} {{parroquia.empleado.apellido}}</td>
+							<td>{{parroquia.municipio}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3>Pastorales</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>NOMBRE</th>
+							<th>ENCARGADO</th>
+							<th>ESLOGAN</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for past in parroquia.pastoral.all%}
+							<tr>
+								<td>{{forloop.counter}}</td>
+								<td>{{past.nombre}} </td>
+								<td>{{past.encargado}}</td>
+								<td>{{past.eslogan}}</td>
+							</tr>
+						{% empty %}
+							<div class="alert alert-danger" role="alert">
+								<p>
+									No hay Pastorales Disponibles
+								</p>
+							</div>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% if request.user.is_staff %}
+					<a href="{% url 'principal:parroquia_editar' parroquia.id %}" 
+					   class="btn btn-info"  
+					   >Editar <span class="glyphicon glyphicon-pencil"></span></a>
+					<button data-toggle="modal" 
+							data-target="#confirm-delete"
+							class="btn btn-danger">
+							Desactivar <span class="glyphicon glyphicon-remove"></span>
+					</button>
+				
+				{% endif %}
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- Modal de Actualizar Parroquia-->
+	<div class="modal fade" id="formParroquia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Datos de la Parroquia  </h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form action="{% url 'principal:parroquia_editar_guardar' parroquia.id %}"
+							method="post" enctype="multipart/form-data">
+			        		{% csrf_token %}
+				        	<div class="panel-body">
+				        		<input name="id" value="{{pk}}" type="hidden">
+					        	{{ form.as_p }}
+					        </div>
+					        <div class="panel-footer">
+					        	<input type="submit" class="btn btn-success" value="Guardar">
+					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+	{# Modal de confirmar desactivacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Desactivar Parroquia</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea desactivar la Parroquia?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<a href="{% url 'principal:parroquia_desactivar' parroquia.id %}"
+						class="btn btn-danger">
+						Desactivar 
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formParroquia').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}
