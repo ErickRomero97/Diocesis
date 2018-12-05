@@ -188,6 +188,16 @@ class Pastoral_DiocesisForm(ModelForm):
 		model = Pastoral_Diocesi
 		fields = '__all__'
 
+#form Diocessis
+class Diocesis_Form(ModelForm):
+	class Meta:
+		model = Diocesi
+		fields = '__all__'
+		widgets = {
+			'empleado': forms.TextInput(attrs={
+				'type': 'hidden'
+				}),
+		}
 
 
 

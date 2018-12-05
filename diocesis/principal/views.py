@@ -13,6 +13,8 @@ from .models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.core.mail import send_mail
+from django.template.defaultfilters import timesince, linebreaks
 
 def index(request):
 	if request.user.id:
@@ -999,8 +1001,6 @@ def eliminar_publicacion(request, id):
 
 	return HttpResponseRedirect(reverse('principal:index'))
 
-def contacto(request):
-	return render(request, 'contactanos.html', )
 
 def homilia(request):
 	if request.user.id:
@@ -1237,6 +1237,93 @@ def pastoral_diocesis_editar_guardar(request):
 		formPastoral.save()
 
 	return HttpResponseRedirect(reverse('principal:pastoral_diocesis'))
+
+
+
+def diocesis_datos(request):
+	datos = Diocesi.objects.all()
+	
+
+	ctx = {
+		'datos': datos
+	}
+
+	return render(request, 'diocesis.html', ctx)
+
+@login_required
+def editar_diocesis(request, id):
+	diocesis = Diocesi.objects.get(pk = id)
+
+	form = Diocesis_Form(instance = diocesis)
+
+	datos = Diocesi.objects.all()
+	
+	for field in form.fields:
+		form.fields[field].widget.attrs['class']='form-control'
+
+	ctx = {
+		'datos': datos,
+		'formDiocesis': form,
+		'abrir': True,
+		'pk': id
+	}
+
+	return render(request, 'diocesis.html', ctx)
+
+@login_required
+def editar_guardar_diocesis(request):
+	diocesis = Diocesi.objects.get(pk = request.POST['id'])
+
+	form = Diocesis_Form(instance = diocesis, data=request.POST, files=request.FILES)
+
+	if form.is_valid():
+		diocesis = form.save(commit=False)
+		form.save()
+
+	return HttpResponseRedirect(reverse('principal:diocesis_datos'))
+
+
+def contacto(request):
+	datos = Diocesi.objects.all()
+
+	ctx = {
+		'datos': datos
+	}
+
+	return render(request, 'contactanos.html', ctx)
+
+
+def send_email(request):	
+    if request.method == 'POST':
+    	datos = Diocesi.objects.get(pk = 1)
+
+    	nombres = request.POST['nombre']
+    	telefono = request.POST['phone']
+    	email = request.POST['email']
+    	subject = 'Consulta'
+    	content = request.POST['mensaje']
+
+    	mensaje = '''
+			De: {} 
+			Email: {}
+			Telefono: {}
+
+			
+			Mensaje: 
+			{}
+    	'''.format(nombres, email, telefono, content)
+
+       
+        send_mail(
+            subject,
+            mensaje,
+            email, #FROM
+            [datos.email]
+        )
+
+	return HttpResponseRedirect(reverse('principal:contacto'))
+ 
+
 
 
 

@@ -9,30 +9,33 @@
     <section class="cantact_info">
         <section class="info_title">
             <span class="fa fa-user-circle"></span>
-            <h2>INFORMACION<br>DE CONTACTO</h2>
+            <h2>INFORMACI&Oacute;N<br>DE CONTACTO</h2>
         </section>
         <section class="info_items">
-            <p><span class="fa fa-envelope"></span> info.contact@gmail.com</p>
-            <p><span class="fa fa-mobile"></span> +1(585) 902-8665</p>
+           {% for dato in datos %}
+                <p><span class="fa fa-envelope"></span>{{dato.email}}</p>
+                <p><span class="fa fa-mobile"></span>{{dato.telefono}}</p>
+           {% endfor %}
         </section>
     </section>
 
-    <form action="" class="form_contact">
-        <h2>Envia un mensaje</h2>
+    <form action="{% url 'principal:send_email' %}" class="form_contact" method="POST">
+        {% csrf_token %}
+        <h2>Env&iacute;a un mensaje</h2>
         <div class="user_info">
             <label for="names">Nombres *</label>
-            <input type="text" id="names">
+            <input type="text" id="names" name="nombre">
 
             <label for="phone">Telefono / Celular</label>
-            <input type="text" id="phone">
+            <input type="text" id="phone" name="phone">
 
             <label for="email">Correo electronico *</label>
-            <input type="text" id="email">
+            <input type="text" id="email" name="email">
 
             <label for="mensaje">Mensaje *</label>
-            <textarea id="mensaje"></textarea>
+            <textarea id="mensaje" name="mensaje"></textarea>
 
-            <input type="button" value="Enviar Mensaje" id="btnSend">
+            <input type="submit" value="Enviar Mensaje" id="btnSend">
         </div>
     </form>
 

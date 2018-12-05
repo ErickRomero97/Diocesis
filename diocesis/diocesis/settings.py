@@ -131,3 +131,9 @@ LOGIN_URL = '/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'global_static'),
 )
+
+EMAIL_USE_TLS =True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'diocesisdecholuteca2018@gmail.com'
+EMAIL_HOST_PASSWORD = 'diocesis2018'
+EMAIL_PORT = 587

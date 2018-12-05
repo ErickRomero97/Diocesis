@@ -68,6 +68,7 @@ urlpatterns = [
 	
 
 	url(r'^contacto/$', views.contacto, name = 'contacto'),
+	url(r'^enviar-email/$', views.send_email, name = 'send_email'),
 
 
 	url(r'^publicaciones/$', views.publicaciones, name = 'publicaciones'),
@@ -92,4 +93,7 @@ urlpatterns = [
 	url(r'^pastorales-diocesis/obtener-pastoral/(?P<id>\d+)/$', views.eliminar_pastoral_diocesis, name = 'eliminar_pastoral_diocesis'),
 	url(r'^pastorales-diocesis/editar-pastoral/$', views.pastoral_diocesis_editar_guardar, name = 'pastoral_diocesis_editar_guardar'),
 
+	url(r'^datos-generales/$', views.diocesis_datos, name = 'diocesis_datos'),
+	url(r'^datos-generales/obtener-datos/(?P<id>\d+)/$', views.editar_diocesis, name = 'editar_diocesis'),
+	url(r'^datos-generales/editar-datos/$', views.editar_guardar_diocesis, name = 'editar_guardar_diocesis'),
 ]

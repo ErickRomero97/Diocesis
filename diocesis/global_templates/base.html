@@ -21,8 +21,9 @@
 		<nav>
 			<ul>
 				<li><a href="{% url 'principal:index' %}">Inicio</a></li>
-				<li class="sub-menu"><a href="#">Nuestra Diócesis</a>
+				<li class="sub-menu"><a>Nuestra Diócesis</a>
 					<ul>
+						<li><a href="{% url 'principal:diocesis_datos' %}">Datos generales</a></li>
 						<li><a href="{% url 'principal:obispo' %}">Nuesto obispo</a></li>
 						<li><a href="{% url 'principal:sacerdote' %}">Directorio sacerdotal</a></li>
 						<li><a href="{% url 'principal:parroquia' %}">Parroquias</a></li>
