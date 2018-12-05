@@ -58,40 +58,38 @@ urlpatterns = [
 	url(r'^usuarios/editar_guardar/$', views.usuario_editar_guardar, name='usuario_editar_guardar'),
 
 
-	
-
-	
-
-	
-
-
-
-
-
 	url(r'^homilia/$', views.homilia, name = 'homilia'),
 	url(r'^nueva-homilia/$', views.nueva_homilia, name = 'nueva_homilia'),
 	url(r'^detalle-homilia/(?P<id>\d+)/$', views.detalle_homilia, name = 'detalle_homilia'),
 	url(r'^eliminar-homilia/(?P<id>\d+)/$', views.eliminar_homilia, name = 'eliminar_homilia'),
-	url(r'^editar-homilia/$', views.editar_homilia, name = 'editar_homilia'),
-	url(r'^obtener-homilia/$', views.obtener_homilia, name = 'obtener_homilia'),
+	url(r'^editar-homilia/(?P<pk>\d+)/$', views.editar_homilia, name = 'editar_homilia'),
+	url(r'^editar-guardar-homilia/$', views.editar_guardar_homilia, name = 'editar_guardar_homilia'),
 	url(r'^homilia-mes/$', views.homiliasXMes, name = 'homilia_mes'),
-
-
-
 	
 
 	url(r'^contacto/$', views.contacto, name = 'contacto'),
+
+
 	url(r'^publicaciones/$', views.publicaciones, name = 'publicaciones'),
 	url(r'^publicacion/(?P<id>\d+)/$', views.publicacion, name = 'publicacion'),
+	url(r'^nueva-publicacion/$', views.nueva_publicacion, name = 'nueva_publicacion'),
+	url(r'^editar-publicacion/(?P<id>\d+)/$', views.editar_publicacion, name = 'editar_publicacion'),
+	url(r'^editar-guardar-publicacion/$', views.editar_guardar_publicacion, name = 'editar_guardar_publicacion'),
+	url(r'^eliminar-publicacion/(?P<id>\d+)/$', views.eliminar_publicacion, name = 'eliminar_publicacion'),
+
 	url(r'^login/$', views.log_in, name = 'login'),
 	url(r'^logout/$', views.log_out, name = 'logout'),
-	url(r'^nueva-publicacion/$', views.nueva_publicacion, name = 'nueva_publicacion'),
-	url(r'^obtener-publicacion/$', views.obtener_publicacion, name = 'obtener_publicacion'),
-	url(r'^editar-publicacion/$', views.editar_publicacion, name = 'editar_publicacion'),
-	url(r'^eliminar-publicacion/(?P<id>\d+)/$', views.eliminar_publicacion, name = 'eliminar_publicacion'),
+
 	url(r'^galeria/$', views.galeria, name = 'galeria'),
 	url(r'^galeria/detalle-album/(?P<id>\d+)/$', views.detalle_album, name = 'detalle_album'),
 	url(r'^galeria/nuevo-album/$', views.nuevo_album, name = 'nuevo_album'),
 	url(r'^galeria/eliminar-album/(?P<id>\d+)/$', views.eliminar_album, name = 'eliminar_album'),
-	url(r'^galeria/agregar-imagen/$', views.agregar_imagen, name = 'agregar_imagen')
+	url(r'^galeria/agregar-imagen/$', views.agregar_imagen, name = 'agregar_imagen'),
+
+	url(r'^pastorales-diocesis/$', views.pastoral_diocesis, name = 'pastoral_diocesis'),
+	url(r'^pastorales-diocesis/agregar-pastoral/$', views.agregar_pastoral_diocesis, name = 'agregar_pastoral_diocesis'),
+	url(r'^pastorales-diocesis/eliminar-pastoral/(?P<id>\d+)/$', views.editar_pastoral_diocesis, name = 'editar_pastoral_diocesis'),
+	url(r'^pastorales-diocesis/obtener-pastoral/(?P<id>\d+)/$', views.eliminar_pastoral_diocesis, name = 'eliminar_pastoral_diocesis'),
+	url(r'^pastorales-diocesis/editar-pastoral/$', views.pastoral_diocesis_editar_guardar, name = 'pastoral_diocesis_editar_guardar'),
+
 ]

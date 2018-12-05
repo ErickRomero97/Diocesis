@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block titulo %} Pastorales {% endblock %}
+
+{% block contenido %}
+	{% load static %}
+	<div id="carousel-1" class="carousel slide" data-ride="carousel">
+		<!-- Indicadores -->
+		<ol class="carousel-indicators" style="z-index: 1;">
+			<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-1" data-slide-to="1"></li>
+			<li data-target="#carousel-1" data-slide-to="2"></li>
+		</ol>
+
+		<!-- Contenedor de los slide -->
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<img src="{% static 'img/catedral-1.jpg' %}" alt="" class="img-responsive">
+				<div class="carousel-caption hidden-xs hidden-sm">
+					<h3>Primer slide</h3>
+					<p>Lorem ipsum dolor sit amet.</p>
+				</div>
+			</div>
+			<div class="item">
+				<img src="{% static 'img/fondo2.jpg' %}" alt="" class="img-responsive">
+				<div class="carousel-caption hidden-xs hidden-sm">
+					<h3>Segundo slide</h3>
+					<p>Lorem ipsum dolor sit amet.</p>
+				</div>
+			</div>
+			<div class="item">
+				<img src="{% static 'img/fondo-1.jpg' %}" alt="" class="img-responsive">
+				<div class="carousel-caption  hidden-xs hidden-sm">
+					<h3>Tercero slide</h3>
+					<p>Lorem ipsum dolor sit amet.</p>
+				</div>
+			</div>
+
+			<!-- Controles -->
+			<a href="#carousel-1" class="left carousel-control" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Anterior</span>
+			</a>
+			<a href="#carousel-1" class="right carousel-control" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Siguiente</span>
+			</a>
+		</div>
+	</div><br>
+	<div class="container">
+		{% if request.user.is_active %}
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formPastoral">Nueva pastoral <span class="glyphicon glyphicon-plus"></span></button><br><br>
+		{% endif %}
+		<div class="row">
+
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="table-responsive">
+			   	<table class="table table-bordered hover">
+			   		<thead>
+			   			<tr>
+			   				<th scope="col">Pastoral</th>
+			   				<th scope="col">Acci&oacute;n</th>
+			   			</tr>
+			   		</thead>
+			   		<tbody>
+			   			{% for pastoral in pastorales %}
+			   				<tr>
+				   				<td>{{ pastoral.nombre }}</td>
+				   				<td>
+				   					<a href="{% url 'principal:editar_pastoral_diocesis' pastoral.id %}" class="btn btn-info" id="bp">Editar <span class="glyphicon glyphicon-pencil"></a>
+				   					<a href="#" data-href="{% url 'principal:eliminar_pastoral_diocesis' pastoral.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>
+				   				</td>
+				   			</tr>
+				   		{% empty %}
+							<div class="alert alert-danger" role="alert">
+								<p>
+									No hay Pastorales Disponibles.
+								</p>
+							</div>
+			   			{% endfor %}
+			   		</tbody>
+			   	</table>
+		   </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# Modal para nueva pastoral #}
+	<div class="modal fade" id="formPastoral" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Nueva pastoral</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form action="{% url 'principal:agregar_pastoral_diocesis' %}" method="post" enctype="multipart/form-data">
+			        	{% csrf_token %}
+			        	<div class="panel-body">
+			        		<input type="hidden" value="{{pk}}" name="id">
+				        	{{ pastoralForm.as_p }}
+				        </div>
+				        <div class="panel-footer">
+				        	<input type="submit" class="btn btn-success" value="Guardar">
+				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+{# Modal para editar pastoral #}
+	<div class="modal fade" id="formEditarPastoral" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Editar Homil&iacute;a</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form action="{% url 'principal:pastoral_diocesis_editar_guardar' %}" method="post" enctype="multipart/form-data">
+			        	{% csrf_token %}
+			        	<div class="panel-body">
+			        		<input type="hidden" value="{{ pk }}" name="id">
+				        	{{ editarPastoralForm.as_p }}
+				        </div>
+				        <div class="panel-footer">
+				        	<input type="submit" class="btn btn-success" value="Guardar">
+				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+{# Modal de confirmar eliminacion #}
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Eliminar Registro</h4>
+				</div>
+				
+				<div class="modal-body">
+					¿Desea eliminar este registro?
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-danger btn-ok">Eliminar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formEditarPastoral').modal('show')
+		{% endif %}
+		
+	})
+</script>
+{% endblock %}

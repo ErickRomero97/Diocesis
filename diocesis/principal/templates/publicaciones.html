@@ -59,7 +59,7 @@
 					<div class="temap">
 						<h3><a href="{% url 'principal:publicacion' publicacion.id %}">{{ publicacion.nombre}}</a></h3>
 						{% if request.user.is_active %}
-							<a href="#" class="btn btn-info btnEditar" id="bp" data-toggle="modal" data-target="#editarPublicacion" data-id="{{ publicacion.id }}" data-url="{% url 'principal:obtener_publicacion' %}">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+							<a href="{% url 'principal:editar_publicacion' publicacion.id %}" class="btn btn-info" id="bp">Editar <span class="glyphicon glyphicon-pencil"></a>
 							<a href="#" data-href="{% url 'principal:eliminar_publicacion' publicacion.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>							
 						{% endif %}
 					</div>
@@ -104,13 +104,11 @@
 	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	         		<span aria-hidden="true">&times;</span>
 	       		</button>
-		        <form action="{% url 'principal:editar_publicacion' %}" method="post" enctype="multipart/form-data">
+		        <form action="{% url 'principal:editar_guardar_publicacion' %}" method="post" enctype="multipart/form-data">
 		        	{% csrf_token %}
 		        	<div class="panel-body">
-		        		<input type="hidden" id="id_pub" name="id_pub">
+		        		<input type="hidden" value="{{ pk }}" name="id">
 			        	{{ editarForm.as_p}}
-			        	<input type="hidden" id="id_empleado" name="empleado">
-			        	<input type="hidden" id="id_fecha" name="fecha">
 			        </div>
 			        <div class="panel-footer">
 			        	<input type="submit" class="btn btn-success" value="Guardar">

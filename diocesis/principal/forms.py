@@ -5,72 +5,38 @@ from .models import *
 class PublicacionForm(ModelForm):
 	class Meta:
 		model = Publicacion
-		fields = ('nombre', 'contenido', 'imagen', )
+		fields = ('__all__')
 		widgets = {
 			'nombre': forms.TextInput(attrs={
-				'class': 'form-control',
 				'placeholder': 'Titulo',
-				'autofocus': 'autofocus',
-				'id': 'nombre'
+				'autofocus': 'autofocus'
+				}),
+			'empleado': forms.TextInput(attrs={
+				'type': 'hidden'
 				}),
 			'contenido': forms.Textarea(attrs={
-				'class': 'form-control',
-				'placeholder': 'Contenido',
-				'id': 'contenido'
-				}),
-			'imagen': forms.FileInput(attrs={
-				'class': 'form-control',
-				'id': 'imagen'
+				'placeholder': 'Contenido'
 				})
 		}
 
 class PublicacionForm_Editar(ModelForm):
 	class Meta:
 		model = Publicacion
-		fields = ('nombre', 'contenido', 'imagen', )
-		widgets = {
-			'nombre': forms.TextInput(attrs={
-				'class': 'form-control',
-				'placeholder': 'Titulo',
-				'autofocus': 'autofocus'
-				}),
-			'contenido': forms.Textarea(attrs={
-				'class': 'form-control',
-				'placeholder': 'Contenido'
-				}),
-			'imagen': forms.FileInput(attrs={
-				'class': 'form-control'
-				})
-		}
+		fields = ('nombre', 'contenido', 'imagen')
 
 class HomiliaForm(ModelForm):
 	class Meta:
 		model = Homilia
-		fields = ('titulo', 'parroquia', 'fecha', 'hora', 'contenido', )
+		fields = '__all__'
 		widgets = {
-			'titulo': forms.TextInput(attrs={
-				'class': 'form-control',
-				'autofocus': 'autofocus',
-				'id': 'titulo'
-				}),
-			'parroquia': forms.Select(attrs={
-				'class': 'form-control',
-				'autofocus': 'autofocus',
-				'id': 'parroquia'
+			'empleado': forms.TextInput(attrs={
+				'type': 'hidden'
 				}),
 			'fecha': forms.DateInput(attrs={
-				'class': 'form-control',
-				'placeholder': 'YY-MM-DD',
-				'id': 'fecha'
+				'type': 'date'
 				}),
 			'hora': forms.TimeInput(attrs={
-				'class': 'form-control',
-				'placeholder': 'H-M-S',
-				'id': 'hora'
-				}),
-			'contenido': forms.Textarea(attrs={
-				'class': 'form-control',
-				'id': 'contenido'
+				'type': 'time'
 				})
 		}
 
@@ -89,11 +55,11 @@ class HomiliaForm_Editar(ModelForm):
 				}),
 			'fecha': forms.DateInput(attrs={
 				'class': 'form-control',
-				'placeholder': 'YY-MM-DD'
+				'type': 'date'
 				}),
 			'hora': forms.TimeInput(attrs={
 				'class': 'form-control',
-				'placeholder': 'H-M-S'
+				'type': 'date'
 				}),
 			'contenido': forms.Textarea(attrs={
 				'class': 'form-control'
@@ -214,6 +180,12 @@ class Empleado_EditarForm(ModelForm):
 class EstudioForm(ModelForm):
 	class Meta:
 		model = Estudio
+		fields = '__all__'
+
+#form Pastoral_Diocesis
+class Pastoral_DiocesisForm(ModelForm):
+	class Meta:
+		model = Pastoral_Diocesi
 		fields = '__all__'
 
 

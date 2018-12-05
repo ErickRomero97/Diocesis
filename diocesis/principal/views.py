@@ -15,18 +15,27 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
-	publicacionForm = PublicacionForm()
-	editarForm = PublicacionForm_Editar()	
+	if request.user.id:
+		empleado = Empleado.objects.get(pk = request.user.id)
+		publicacionForm = PublicacionForm(initial={'empleado': empleado})
+	else:
+		publicacionForm = PublicacionForm()
+
+	for field in publicacionForm.fields:
+		publicacionForm.fields[field].widget.attrs['class']='form-control'
+
+
 	form = AuthenticationForm()
 	form.fields['username'].widget.attrs['class'] = 'form-control'
 	form.fields['username'].widget.attrs['autofocus'] = 'True'
 	form.fields['password'].widget.attrs['class'] = 'form-control'
+
 	publicaciones = Publicacion.objects.all().order_by('-fecha_pub')[:3]
+
 	context = {
 		'publicaciones': publicaciones,
 		'form': form,
 		'publicacionForm': publicacionForm,
-		'editarForm': editarForm
 	}
 	return render(request, 'index.html', context)
 
@@ -840,16 +849,6 @@ def usuario_editar_guardar(request):
 
 	return HttpResponseRedirect(reverse('principal:usuario'))
 
-
-
-
-
-
-
-
-
-
-
 def publicaciones(request):
 	# template = loader.get_template('publicaciones.html')
 	editarForm = PublicacionForm_Editar()
@@ -942,37 +941,54 @@ def log_out(request):
 
 @login_required
 def nueva_publicacion(request):
-	empleado = Empleado.objects.get(user = request.user.id)
-	publicacion = Publicacion()
-	publicacion.nombre = request.POST['nombre']
-	publicacion.contenido = request.POST['contenido']
-	publicacion.empleado = Empleado(empleado.id)
-	publicacion.imagen = request.FILES['imagen']
-	publicacion.save()
+	if request.method == 'POST':
+		form = PublicacionForm(request.POST, request.FILES)
 
-	return HttpResponseRedirect(reverse('principal:index'))
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('principal:index'))
 
 @login_required
-def obtener_publicacion(request):
-	id = request.GET['idPub']
+def editar_publicacion(request, id):
 	publicacion = Publicacion.objects.get(pk = id)
+	publicacionForm_Editar = PublicacionForm_Editar(instance=publicacion)
 
-	return JsonResponse({'nombre': publicacion.nombre, 'contenido': publicacion.contenido, 'empleado': publicacion.empleado.id, 'fecha': publicacion.fecha_pub})
+	if request.user.id:
+		empleado = Empleado.objects.get(pk = request.user.id)
+		publicacionForm = PublicacionForm(initial={'empleado': empleado})
+	else:
+		publicacionForm = PublicacionForm()
+
+	for field in publicacionForm_Editar.fields:
+		publicacionForm_Editar.fields[field].widget.attrs['class']='form-control'
+
+	for field in publicacionForm.fields:
+		publicacionForm.fields[field].widget.attrs['class']='form-control'
+
+	form = AuthenticationForm()
+	form.fields['username'].widget.attrs['class'] = 'form-control'
+	form.fields['username'].widget.attrs['autofocus'] = 'True'
+	form.fields['password'].widget.attrs['class'] = 'form-control'
+
+	publicaciones = Publicacion.objects.all().order_by('-fecha_pub')[:3]
+
+	context = {
+		'publicaciones': publicaciones,
+		'form': form,
+		'publicacionForm': publicacionForm,
+		'editarForm': publicacionForm_Editar,
+		'abrir': True,
+		'pk': id
+	}
+	return render(request, 'index.html', context)
 
 @login_required
-def editar_publicacion(request):
-	id = request.POST['id_pub']
-	empleado = Empleado.objects.get(pk = request.POST['empleado'])
-	publicacion = Publicacion(pk = id)
-	publicacion.nombre = request.POST['nombre']
-	publicacion.contenido = request.POST['contenido']
-
-	publicacion.imagen = request.FILES['imagen']
-
-	publicacion.empleado = Empleado(empleado.id)
-	publicacion.fecha_pub = request.POST['fecha']
-
-	publicacion.save()
+def editar_guardar_publicacion(request):
+	publicacion = Publicacion.objects.get(pk = int(request.POST['id']))
+	publicacionForm_Editar = PublicacionForm_Editar(instance=publicacion, data=request.POST, files=request.FILES)
+	if publicacionForm_Editar.is_valid():
+		publicacion = publicacionForm_Editar.save(commit=False)
+		publicacionForm_Editar.save()
 
 	return HttpResponseRedirect(reverse('principal:index'))
 
@@ -987,14 +1003,18 @@ def contacto(request):
 	return render(request, 'contactanos.html', )
 
 def homilia(request):
+	if request.user.id:
+		empleado = Empleado.objects.get(user = request.user.id)
+		homiliaForm = HomiliaForm(initial = {'empleado': empleado})
+	else:
+		homiliaForm = HomiliaForm()
+
 	homilias = Homilia.objects.all().order_by('fecha')
-	homiliaForm = HomiliaForm()
-	homiliaForm_Editar = HomiliaForm_Editar()
+	for field in homiliaForm.fields:
+		homiliaForm.fields[field].widget.attrs['class']='form-control'
 
 	ctx = {
-		'homilias': homilias,
-		'homiliaForm': homiliaForm,
-		'homiliaForm_Editar': homiliaForm_Editar
+		'homiliaForm': homiliaForm
 	}
 	return render(request, 'homilia.html', ctx)
 
@@ -1008,51 +1028,62 @@ def detalle_homilia(request, id):
 	return render(request, 'detalleHomilia.html', ctx)
 
 @login_required
-def obtener_homilia(request):
-	id = request.GET['id']
+def editar_homilia(request, pk):
+	homilia = Homilia.objects.get(pk = pk)
+	homiliaFormEditar = HomiliaForm(instance = homilia)
+	
+	if request.user.id:
+		empleado = Empleado.objects.get(user = request.user.id)
+		homiliaForm = HomiliaForm(initial = {'empleado': empleado})
+	else:
+		homiliaForm = HomiliaForm()
 
-	homilia = Homilia.objects.get(pk = id)
+	for field in homiliaForm.fields:
+		homiliaForm.fields[field].widget.attrs['class']='form-control'
+
+	for field in homiliaFormEditar.fields:
+		homiliaFormEditar.fields[field].widget.attrs['class']='form-control'
+
 	ctx = {
-		'titulo': homilia.titulo,
-		'parroquia': homilia.parroquia.id,
-		'fecha': homilia.fecha,
-		'hora': homilia.hora,
-		'empleado': homilia.empleado.id,
-		'contenido': homilia.contenido
+		'homiliaFormEditar': homiliaFormEditar,
+		'homiliaForm': homiliaForm,
+		'abrir': True,
+		'pk': pk
 	}
-	return JsonResponse(ctx)
+	return render(request, 'homilia.html', ctx)
 
 @login_required
-def editar_homilia(request):
-	id = request.POST['id_homilia']
-	homilia = Homilia.objects.get(pk = id)
-	empleado = Empleado.objects.get(pk = request.POST['empleado'])
-	parroquia = Parroquia.objects.get(pk = request.POST['parroquia'])
-
-	homilia.titulo = request.POST['titulo']
-	homilia.parroquia = Parroquia(parroquia.id)
-	homilia.fecha = request.POST['fecha']
-	homilia.hora = request.POST['hora']
-	homilia.contenido = request.POST['contenido']
-	homilia.empleado = Empleado(empleado.id)
-	homilia.save()
+def editar_guardar_homilia(request):
+	homilia = Homilia.objects.get(pk = int(request.POST['id']))
+	homiliaForm = HomiliaForm(instance=homilia, data=request.POST)
+	if homiliaForm.is_valid():
+		homilia = homiliaForm.save(commit=False)
+		homiliaForm.save()
 
 	return HttpResponseRedirect(reverse('principal:homilia'))
+
 
 def homiliasXMes(request):
 	id = request.GET['id']
 	homilias = Homilia.objects.filter(fecha__month = id)
 	homiliasMes = []
 	botones = ''
-	mensaje = 'No hay homilías disponibles.'
-	if request.user.is_active:
-		for ho in homilias:
-			botones = '''
-						<a href="" class="btn btn-info btnEditarHomilia" data-toggle="modal" data-target="#editarHomilia" data-id="{}" data-url="../obtener-homilia/">Editar <span class="glyphicon glyphicon-pencil"></span></a>
-						<a href="" data-href="../eliminar-homilia/{}/" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>						
-					  ''' .format(ho.id, ho.id)
-
+	listBotones = []
+	mensaje = '''
+				<div class="alert alert-danger" role="alert">
+					<p>
+						No hay homil&iacute;as Disponibles.
+					</p>
+				</div>
+			  '''
+	
 	for h in homilias:
+		if request.user.is_active:
+			botones = '''
+						<a href="/principal/editar-homilia/{}/" class="btn btn-info">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+						<a href="" data-href="/principal/eliminar-homilia/{}/" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>						
+					  ''' .format(h.id, h.id)
+
 		formato = '''
 					<tr>
 						<td>{}</td>
@@ -1060,7 +1091,7 @@ def homiliasXMes(request):
 						<td>{}</td>
 						<td>{}</td>
 						<td style="text-align: center">
-							<a href="../detalle-homilia/{}/" class="btn btn-warning">Ver m&aacute;s <span class="glyphicon glyphicon-search"></span></a>
+							<a href="/principal/detalle-homilia/{}/" class="btn btn-warning">Ver m&aacute;s <span class="glyphicon glyphicon-search"></span></a>
 							{}
 						</td>
 					</tr> 
@@ -1072,18 +1103,12 @@ def homiliasXMes(request):
 
 @login_required
 def nueva_homilia(request):
-	homilia = Homilia()
-	empleado = Empleado.objects.get(user = request.user.id)
+	if request.method == 'POST':
+		form = HomiliaForm(request.POST)
 
-	homilia.titulo = request.POST['titulo']
-	homilia.parroquia = Parroquia(request.POST['parroquia'])
-	homilia.fecha = request.POST['fecha']
-	homilia.hora = request.POST['hora']
-	homilia.empleado = Empleado(empleado.id)
-	homilia.contenido = request.POST['contenido']
-	homilia.save()
-
-	return HttpResponseRedirect(reverse('principal:homilia'))
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('principal:homilia'))
 
 @login_required
 def eliminar_homilia(request, id):
@@ -1141,3 +1166,79 @@ def agregar_imagen(request):
 	album.imagen.add(imagen)
 
 	return HttpResponseRedirect(reverse('principal:detalle_album', args=(idAlbum,)))
+
+def pastoral_diocesis(request):
+	pastorales = Pastoral_Diocesi.objects.all()
+	pastoralForm = Pastoral_DiocesisForm()
+
+	for field in pastoralForm.fields:
+		pastoralForm.fields[field].widget.attrs['class']='form-control'
+
+	ctx = {
+		'pastorales': pastorales,
+		'pastoralForm': pastoralForm
+	}
+	return render(request, 'pastorales_diocesis.html', ctx)
+
+
+@login_required
+def agregar_pastoral_diocesis(request):
+	if request.method == 'POST':
+		form = Pastoral_DiocesisForm(data=request.POST)
+
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('principal:pastoral_diocesis'))
+
+@login_required
+def eliminar_pastoral_diocesis(request, id):
+	pastoral = Pastoral_Diocesi.objects.get(pk = id)
+	pastorales_parroquia = Pastoral.objects.filter(nombre = pastoral)
+
+	pastorales_parroquia.delete()
+
+	pastoral.delete()
+
+	return HttpResponseRedirect(reverse('principal:pastoral_diocesis'))
+
+@login_required
+def editar_pastoral_diocesis(request, id):
+	pastoral = Pastoral_Diocesi.objects.get(pk = id)
+
+	formPastoral = Pastoral_DiocesisForm(instance = pastoral)
+
+	pastorales = Pastoral_Diocesi.objects.all()
+	pastoralForm = Pastoral_DiocesisForm()
+
+	for field in formPastoral.fields:
+		formPastoral.fields[field].widget.attrs['class']='form-control'
+
+	for field in pastoralForm.fields:
+		pastoralForm.fields[field].widget.attrs['class']='form-control'
+
+	ctx = {
+		'pastorales': pastorales,
+		'pastoralForm': pastoralForm,
+		'editarPastoralForm': formPastoral,
+		'abrir': True,
+		'pk': id
+	}
+
+	return render(request, 'pastorales_diocesis.html', ctx)
+
+@login_required
+def pastoral_diocesis_editar_guardar(request):
+	pastoral = Pastoral_Diocesi.objects.get(pk = request.POST['id'])
+
+	formPastoral = Pastoral_DiocesisForm(instance = pastoral, data=request.POST)
+
+	if formPastoral.is_valid():
+		pastoral = formPastoral.save(commit=False)
+		formPastoral.save()
+
+	return HttpResponseRedirect(reverse('principal:pastoral_diocesis'))
+
+
+
+
+

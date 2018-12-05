@@ -121,6 +121,30 @@
 		    </div>
 		</div>
 	</div>
+	{# Modal para editar homilia #}
+	<div class="modal fade" id="formEditarHomilia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		     	<div class="modal-header">
+		        	<h5 class="modal-title" id="exampleModalLabel">Editar Homil&iacute;a</h5>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		         		<span aria-hidden="true">&times;</span>
+		       		</button>
+			        <form action="{% url 'principal:editar_guardar_homilia' %}" method="post" enctype="multipart/form-data">
+			        	{% csrf_token %}
+			        	<div class="panel-body">
+			        		<input type="hidden" value="{{ pk }}" name="id">
+				        	{{ homiliaFormEditar.as_p }}
+				        </div>
+				        <div class="panel-footer">
+				        	<input type="submit" class="btn btn-success" value="Guardar">
+				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				        </div>
+			        </form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
 	{# Modal de confirmar eliminacion #}
 	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -141,29 +165,14 @@
 			</div>
 		</div>
 	</div>
-	{# Modal de editar editar #}
-	<div class="modal fade" id="editarHomilia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		     	<div class="modal-header">
-		        	<h5 class="modal-title" id="exampleModalLabel">Editar Homil&iacute;a</h5>
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		         		<span aria-hidden="true">&times;</span>
-		       		</button>
-			        <form action="{% url 'principal:editar_homilia' %}" method="post" enctype="multipart/form-data">
-			        	{% csrf_token %}
-			        	<div class="panel-body">
-			        		<input type="hidden" id="id_homilia" name="id_homilia">
-				        	{{ homiliaForm_Editar.as_p}}
-				        	<input type="hidden" id="id_empleado" name="empleado">
-				        </div>
-				        <div class="panel-footer">
-				        	<input type="submit" class="btn btn-success" value="Guardar">
-				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-				        </div>
-			        </form>
-		    	</div>
-		    </div>
-		</div>
-	</div>
+{% endblock %}
+{% block script %}
+<script>
+	$(function(){
+		{% if abrir %}
+			$('#formEditarHomilia').modal('show')
+		{% endif %}
+		
+	})
+</script>
 {% endblock %}
