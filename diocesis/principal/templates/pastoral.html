@@ -26,13 +26,13 @@
 						        <h4><strong>Encargado: </strong>{{p.encargado}}</h4>
 						        <h4><strong>Eslogan: </strong>{{p.eslogan}}</h4>
 						        <h4><strong>Horarios: </strong>{{p.horarios}}</h4>
-						        {% if p.parroquia_set.all.last	 %}
-						        	<a href="{% url 'principal:parroquia_ver' p.parroquia_set.all.last.id %}">
-						      	 		<h3><strong>Parroquia: </strong>{{p.parroquia_set.all.last.nombre}}</h3>
-						      		</a>
-						        {% endif %}
-						      
+						     	 
 						        {% if request.user.is_staff %}
+						          	{% if p.parroquia_set.all.last	 %}
+							        	<a href="{% url 'principal:parroquia_ver' p.parroquia_set.all.last.id %}">
+							      	 		<h3><strong>Parroquia: </strong>{{p.parroquia_set.all.last.nombre}}</h3>
+							      		</a>
+						        	{% endif %}
 						        	 <a href="{% url 'principal:pastoral_editar' p.id %}" 
 							   			class="btn btn-info"  
 							   			>Editar <span class="glyphicon glyphicon-pencil"></span></a>
@@ -42,6 +42,10 @@
 											class="btn btn-danger btn_pastoral">
 											Eliminar <span class="glyphicon glyphicon-remove"></span>
 									</button>
+								{% else %}
+									{% if p.parroquia_set.all.last	 %}
+							      	 	<h3><strong>Parroquia: </strong>{{p.parroquia_set.all.last.nombre}}</h3>
+						        	{% endif %}
 						        {% endif %}
 						      </div>
 						    </div>

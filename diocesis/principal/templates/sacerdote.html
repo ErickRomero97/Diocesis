@@ -20,16 +20,20 @@
 					      <div class="caption">
 					        <h3><strong>Nombre: </strong>{{p.empleado.nombre}} {{p.empleado.apellido}}</h3>
 					        <h4><strong>Telefono: </strong>{{p.empleado.telefono}}</h4>
-					        <a href="{% url 'principal:parroquia_ver' p.id %}">
-					        	 <h3><strong>Parroquia: </strong>{{p.nombre}}</h3>
-					        </a>
+					        
 					        {% if request.user.is_staff %}
 					        	 <p><a href="{% url 'principal:sacerdote_ver' p.empleado.id %}" 
 								   		class="btn btn-warning"  
 								   		>Ver Mas <span class="glyphicon glyphicon-eye-open"></span>
 									</a>
 					        	</p>
+					        	<a href="{% url 'principal:parroquia_ver' p.id %}">
+					        		 <h3><strong>Parroquia: </strong>{{p.nombre}}</h3>
+					        	</a>
+					        {% else %}
+					        	<h3><strong>Parroquia: </strong>{{p.nombre}}</h3>
 					        {% endif %}
+					        
 					      </div>
 					    </div>
 					  </div>

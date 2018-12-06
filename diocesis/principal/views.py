@@ -88,7 +88,6 @@ def parroquia_admin_guardar(request):
 					<td>%s</td>
 					<td>%s</td>
 					<td><span id="estado-%s">%s</span></td>
-					<td>%s %s</td>
 					<td>
 						<div class="btn-group">
 						 	<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -104,8 +103,9 @@ def parroquia_admin_guardar(request):
 							</ul>
 						</div>
 					</td>
+					<td>%s %s</td>
 				</tr>
-			'''% (p.nombre,p.telefono,p.direccion,p.id,p.estado,p.empleado.nombre,p.empleado.apellido,p.id)
+			'''% (p.nombre,p.telefono,p.direccion,p.id,p.estado,p.id,p.empleado.nombre,p.empleado.apellido)
 			return JsonResponse({'response':parroquia})
 		else:
 			return render(request, 'parroquia_admin.html',{'form': form})
@@ -513,13 +513,21 @@ def obispo_ver(request,pk):
 	return render(request,'obispo_ver.html',data)
 
 
-@login_required
-def obispo_desactivar(request):
-	id = request.GET.get('id')
-	e = Empleado.objects.get(pk=id)
+@login_required()
+def obispo_desactivar(request, pk):
+	e = Empleado.objects.get(pk=pk)
 	e.estado_obispo= False
 	e.save()
-	return JsonResponse({'response':'desactivado'})
+	return HttpResponseRedirect(reverse('principal:obispo'))
+
+
+# @login_required
+# def obispo_desactivar(request):
+# 	id = request.GET.get('id')
+# 	e = Empleado.objects.get(pk=id)
+# 	e.estado_obispo= False
+# 	e.save()
+# 	return JsonResponse({'response':'desactivado'})
 
 
 
@@ -657,7 +665,6 @@ def empleado_guardar(request):
 				<td>%s</td>
 				<td><span id="estado-%s">%s</span></td>
 				<td>%s</td>
-				<td>%s</td>
 				<td>
 					<div class="btn-group">
 						<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -673,8 +680,9 @@ def empleado_guardar(request):
 						</ul>
 					</div>
 				</td>
+				<td>%s</td>
 			</tr>
-			'''% (e.numero_identidad,e.nombre,e.apellido,e.telefono,e.direccion,e.id,e.estado,e.correo,e.cargo,e.id)
+			'''% (e.numero_identidad,e.nombre,e.apellido,e.telefono,e.direccion,e.id,e.estado,e.correo,e.id,e.cargo)
 			return JsonResponse({'response':empleado})
 		else:
 			return render(request, 'empleado.html',{'form': form})
@@ -777,7 +785,6 @@ def usuarios_guardar(request):
 				<td>%s</td>
 				<td><span id="estado-%s">%s</span></td>
 				<td>%s</td>
-				<td>%s</td>
 				<td>
 					<div class="btn-group">
 						<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -787,6 +794,7 @@ def usuarios_guardar(request):
 						</ul>
 					</div>
 				</td>
+				<td>%s</td>
 			</tr>'''% (u.id,u.username,u.first_name,u.last_name,u.is_superuser,u.id,u.is_active,u.date_joined,u.last_login)
 			return JsonResponse({'response':usu})
 		else:

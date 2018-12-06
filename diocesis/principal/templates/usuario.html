@@ -24,7 +24,7 @@
 			{% endif %}	
 					
 			<h2>Lista de Usuarios</h2>
-			<div>
+			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -34,8 +34,8 @@
 							<th>SUPER USER</th>
 							<th>ACTIVO</th>
 							<th><span class="glyphicon glyphicon-calendar"></span> CREACION DE CUENTA</th>
-							<th><span class="glyphicon glyphicon-calendar"></span> ULTIMO LOGUEO</th>
 							<th><span class="glyphicon glyphicon-wrench"></span> OPCIÓNES</th>
+							<th><span class="glyphicon glyphicon-calendar"></span> ULTIMO LOGUEO</th>
 						</tr>
 					</thead>
 					<tbody id="add_usuario">
@@ -47,7 +47,6 @@
 								<td>{{u.is_superuser}}</td>
 								<td><span id="estado-{{u.id}}">{{u.is_active}}</span></td>
 								<td>{{u.date_joined}}</td>
-								<td>{{u.last_login}}</td>
 								<td>
 									<div class="btn-group">
 										  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,6 +75,7 @@
 										  </ul>
 									</div>
 								</td>
+								<td>{{u.last_login}}</td>
 							</tr>
 						{% empty %}
 							<div class="alert alert-danger" role="alert">

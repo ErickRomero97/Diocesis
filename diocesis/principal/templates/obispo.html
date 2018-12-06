@@ -23,7 +23,7 @@
 			<div class="bio col-md-8" style="margin-left: 90px;">
 				<h1>{{empleado.nombre}} {{empleado.apellido}}</h1>
 				<hr>
-				<p>{{empleado.biografia}}</p>
+				<p>{{empleado.biografia|linebreaks}}</p>
 				<h3>Estudios</h3>
 				<table class="table table-striped">
 					<thead>
@@ -111,13 +111,13 @@
 				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					<button data-id="{{empleado.id}}"
-							data-url="{% url 'principal:obispo_desactivar'%}"
-							class="btn btn-danger"
-							id="btn_dObispo" 
-							data-toggle="modal" data-target="#confirm-delete">
-							Desactivar 
-					</button>
+					{% if empleado.id %}
+						<a 	class="btn btn-danger"
+							href="{% url 'principal:obispo_desactivar' empleado.id %}">
+							Desactivar
+						</a>
+					{% endif %}
+					
 				</div>
 			</div>
 		</div>

@@ -80,20 +80,20 @@ $(function(){
 	})
 
 
-	//desactivar el obispo actual
-	$('#btn_dObispo').on('click', function(){
-		var id = $(this).attr('data-id');
-		var url = $(this).attr('data-url');
-		var btn=$(this);
-		$.get(url, {'id':id},function(data){
-			$(btn).html(data.action);
-			$('#data_Obispo').fadeOut();
-			$('#nuevo_Obispo').fadeIn();
+	// //desactivar el obispo actual
+	// $('#btn_dObispo').on('click', function(){
+	// 	var id = $(this).attr('data-id');
+	// 	var url = $(this).attr('data-url');
+	// 	var btn=$(this);
+	// 	$.get(url, {'id':id},function(data){
+	// 		$(btn).html(data.action);
+	// 		$('#data_Obispo').fadeOut();
+	// 		$('#nuevo_Obispo').fadeIn();
 
 
-		}, 'json');
+	// 	}, 'json');
 
-	});
+	// });
 
 	var _ID = 0;
 	$(document).on('click', '.btn_pastoral', function(){

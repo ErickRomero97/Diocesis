@@ -12,7 +12,7 @@
 			<br>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formEmpleado">Nuevo Empleado <span class="glyphicon glyphicon-plus"></span></button>	
 			<h2>Lista de Empleados</h2>
-			<div>
+			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -22,8 +22,8 @@
 							<th>DIRECCIÓN</th>
 							<th>ACTIVO</th>
 							<th>CORREO</th>
-							<th>CARGO</th>
 							<th><span class="glyphicon glyphicon-wrench"></span> OPCIÓNES</th>
+							<th>CARGO</th>
 						</tr>
 					</thead>
 					<tbody id="add_empleado">
@@ -35,7 +35,6 @@
 								<td>{{e.direccion}}</td>
 								<td><span id="estado-{{e.id}}">{{e.estado}}</span></td>
 								<td>{{e.correo}}</td>
-								<td>{{e.cargo}}</td>
 								<td>
 									<div class="btn-group">
 										  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,6 +57,7 @@
 										  </ul>
 									</div>
 								</td>
+								<td>{{e.cargo}}</td>
 							</tr>
 						{% empty %}
 							<div class="alert alert-danger" role="alert">

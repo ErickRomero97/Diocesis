@@ -23,7 +23,7 @@ urlpatterns = [
 	url(r'^obispo/guardar/$', views.obispo_guardar, name='obispo_guardar'),
 	url(r'^obispo/(?P<pk>\d+)/$', views.obispo_editar, name='obispo_editar'),
 	url(r'^obispo/editar_guardar/$', views.obispo_editar_guardar, name='obispo_editar_guardar'),
-	url(r'^obispo/desactivar/$', views.obispo_desactivar, name = 'obispo_desactivar'),
+	url(r'^obispo/(?P<pk>\d+)/desactivar/$', views.obispo_desactivar, name = 'obispo_desactivar'),
 
 	url(r'^parroquia/$', views.parroquia, name = 'parroquia'),
 	url(r'^parroquia/(?P<pk>\d+)/ver/$', views.parroquia_ver, name='parroquia_ver'),

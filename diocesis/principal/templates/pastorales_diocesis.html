@@ -59,17 +59,23 @@
 			   		<thead>
 			   			<tr>
 			   				<th scope="col">Pastoral</th>
-			   				<th scope="col">Acci&oacute;n</th>
+			   				{% if request.user.is_staff %}
+			   					<th scope="col">Acción</th>
+			   				{% endif %}
+			   				
 			   			</tr>
 			   		</thead>
 			   		<tbody>
 			   			{% for pastoral in pastorales %}
 			   				<tr>
 				   				<td>{{ pastoral.nombre }}</td>
-				   				<td>
-				   					<a href="{% url 'principal:editar_pastoral_diocesis' pastoral.id %}" class="btn btn-info" id="bp">Editar <span class="glyphicon glyphicon-pencil"></a>
-				   					<a href="#" data-href="{% url 'principal:eliminar_pastoral_diocesis' pastoral.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>
-				   				</td>
+				   				{% if request.user.is_staff  %}
+				   					<td>
+					   					<a href="{% url 'principal:editar_pastoral_diocesis' pastoral.id %}" class="btn btn-info" id="bp">Editar <span class="glyphicon glyphicon-pencil"></a>
+					   					<a href="#" data-href="{% url 'principal:eliminar_pastoral_diocesis' pastoral.id %}" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">Eliminar <span class="glyphicon glyphicon-remove"></span></a>
+				   					</td>
+				   				{% endif %}
+				   				
 				   			</tr>
 				   		{% empty %}
 							<div class="alert alert-danger" role="alert">

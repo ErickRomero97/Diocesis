@@ -12,7 +12,7 @@
 			<br>
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formParroquia">Nueva Parroquia <span class="glyphicon glyphicon-plus"></span></button>	
 			<h2>Lista de Parroquias</h2>
-			<div>
+			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -20,8 +20,8 @@
 							<th>TELEFONO</th>
 							<th>DIRECCIÓN</th>
 							<th>ACTIVO</th>
-							<th>PARROCO</th>
 							<th><span class="glyphicon glyphicon-wrench"></span> OPCIÓNES</th>
+							<th>PARROCO</th>
 						</tr>
 					</thead>
 					<tbody id="add_parroquia">
@@ -31,7 +31,6 @@
 								<td>{{p.telefono}}</td>
 								<td>{{p.direccion}}</td>
 								<td><span id="estado-{{p.id}}">{{p.estado}}</span></td>
-								<td>{{p.empleado.nombre}} {{p.empleado.apellido}}</td>
 								<td>
 									<div class="btn-group">
 										  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,6 +53,7 @@
 										  </ul>
 									</div>
 								</td>
+								<td>{{p.empleado.nombre}} {{p.empleado.apellido}}</td>
 							</tr>
 						{% empty %}
 							<div class="alert alert-danger" role="alert">
