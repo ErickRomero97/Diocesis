@@ -86,6 +86,8 @@ urlpatterns = [
 	url(r'^galeria/nuevo-album/$', views.nuevo_album, name = 'nuevo_album'),
 	url(r'^galeria/eliminar-album/(?P<id>\d+)/$', views.eliminar_album, name = 'eliminar_album'),
 	url(r'^galeria/agregar-imagen/$', views.agregar_imagen, name = 'agregar_imagen'),
+	url(r'^galeria/eliminar-imagen/$', views.eliminar_imagen, name = 'eliminar_imagen'),
+
 
 	url(r'^pastorales-diocesis/$', views.pastoral_diocesis, name = 'pastoral_diocesis'),
 	url(r'^pastorales-diocesis/agregar-pastoral/$', views.agregar_pastoral_diocesis, name = 'agregar_pastoral_diocesis'),

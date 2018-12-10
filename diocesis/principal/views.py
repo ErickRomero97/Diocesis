@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from django.template.defaultfilters import timesince, linebreaks
 
 def index(request):
+	listimg = Album.objects.all()
 	sacerdote = Empleado.objects.all().count()
 	parroquias = Parroquia.objects.all().count()
 	pastoral1 = Pastoral.objects.all().count()
@@ -1182,6 +1183,14 @@ def agregar_imagen(request):
 	album.imagen.add(imagen)
 
 	return HttpResponseRedirect(reverse('principal:detalle_album', args=(idAlbum,)))
+
+@login_required
+def eliminar_imagen(request):
+	album = Album.objects.get(pk = request.POST['album'])
+	album.imagen.remove(int(request.POST['imagen']))
+	album.save()
+
+	return HttpResponseRedirect(reverse('principal:galeria'))
 
 def pastoral_diocesis(request):
 	pastorales = Pastoral_Diocesi.objects.all()

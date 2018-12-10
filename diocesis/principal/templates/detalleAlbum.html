@@ -64,6 +64,12 @@
 		<div class="row">
 			{% for a in album.imagen.all %}
 				<div class="col-md-3 col-sm-6 col-xs-6">
+					<form action="{% url 'principal:eliminar_imagen' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ album.id}}" name="album">
+						<input type="hidden" value="{{ a.id}}" name="imagen">
+						<input type="submit" class="btn btn-danger" value="&times;">
+					</form>
 					<img src="{{ a.imagen.url }}" alt="" width="100%" style="height: 200px !important; text-align: center !important;" class="img-responsive col-img"><br><br>
 				</div>
 			{% empty %}

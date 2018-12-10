@@ -311,6 +311,7 @@ header nav ul li a.active{
       text-align: justify;
       margin-left: 90px;
       margin-bottom: 20px;
+      padding-bottom: 20px;
 }
 
 #guyimg img{
@@ -714,7 +715,7 @@ form.form_contact input[type="button"]:hover{
 }
 
 .historiatodo{
-  background: url(../img/parroquias.png);
+  background: url(../img/diocesis1.jpg);
   padding-top: 40px;
   padding-bottom: 40px;
 }
@@ -724,9 +725,11 @@ form.form_contact input[type="button"]:hover{
 /*configuraciones*/
 .config1{
       width: 100%;
+      height: 100vh;
       background-image: url(../img/2.jpg);
       background-size: cover;
       display: table;
+
       background-attachment: fixed;
       padding-bottom: 40px;
 
@@ -761,6 +764,13 @@ form.form_contact input[type="button"]:hover{
 }
 
 
+
+#parroimg1 img {
+  width: 340px;
+  height: 300px;
+  border-radius: 10px;
+}
+
 /*pastoral*/
 
 #pastoral1{
@@ -772,6 +782,12 @@ form.form_contact input[type="button"]:hover{
       text-align: center;
 }
 
+.contactoss{
+   background: url(../img/contactanosss.jpg);
+   height: 100%;
+  width: 100%;
+  padding-top: 50px
+  } 
 
 
 @media screen and (max-width: 100%){
