@@ -24,6 +24,7 @@ header {
       width: 100%;
       box-sizing: border-box;
       z-index: 3;
+      background: rgba(0, 0, 0, 0.50);
 }
 
 header .logo{
@@ -294,18 +295,22 @@ header nav ul li a.active{
 
 /*Obispo*/
 #sss{
-      background: url(../img/123.jpg) no-repeat;
+      background: url(../img/123.jpg) ;
       padding-top: 130px;
       padding-left: 80px;
       padding-right: 80px;
       margin: 0 auto;
-      height: 100vh;
+      height: 100%;
       width: 100%;
+      text-align: center;
 }
+
 .bio{
       background: rgba(224,224,224,0.7);
       border-radius: 20px;
       text-align: justify;
+      margin-left: 90px;
+      margin-bottom: 20px;
 }
 
 #guyimg img{
@@ -315,10 +320,24 @@ header nav ul li a.active{
 
 /*sacerdotes*/
 .scontenedor{
-      background: url(../img/fsacerdotes.jpg) no-repeat;
-      height:100vh;
-      margin-top: -40px;
+      background: url(../img/fsacerdotes.jpg);
+      height:100%;
+      margin-top: -15px;
 
+}
+
+#sacerdote1{
+  margin-top: 40px;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 5px;
+  height: 400px;
+}
+
+#sacerdote1 img{
+  width: 120px;
+  height: 120px;
 }
 
 .s1{
@@ -329,8 +348,8 @@ header nav ul li a.active{
 
 }
 
-.sacerdotestext{
-      background: rgba(224,224,224,0.7);
+.sacerdotestext img{
+   margin-top: 80px;  
 }
 
 
@@ -362,6 +381,7 @@ header nav ul li a.active{
       background: rgba(0,0,0,0.5);
       padding: 30px;
       border-radius: 5px;
+      text-align: center;
 }
 
 .usp img{
@@ -386,7 +406,7 @@ header nav ul li a.active{
 
       background: url(../img/fondofoot.png) no-repeat;
       text-align: center;
-      height: 120px;
+      height: 100%;
 }
 
 
@@ -426,7 +446,7 @@ header nav ul li a.active{
 
 #relog{
       text-align: center;
-      margin-left: -80px;
+      
 }
 
 
@@ -684,12 +704,81 @@ form.form_contact input[type="button"]:hover{
 
 
 
+/*historia de la diocesis*/
+#historia1{
+  padding-top: 40px;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.historiatodo{
+  background: url(../img/parroquias.png);
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
 
 
 
+/*configuraciones*/
+.config1{
+      width: 100%;
+      background-image: url(../img/2.jpg);
+      background-size: cover;
+      display: table;
+      background-attachment: fixed;
+      padding-bottom: 40px;
+
+}
 
 
 
+/*parroquias*/
+#parroquia1{
+  margin-top: 40px;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 5px;
+  height: 500px;
+  text-align: left;
+}
+
+#parroquia1 img{
+  width: 120px;
+  height: 120px;
+  text-align: center;
+}
+
+#parroquias{
+      background: url(../img/parroquias.png);
+      padding-top: 130px;
+      margin: 0 auto;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+}
+
+
+/*pastoral*/
+
+#pastoral1{
+      background: url(../img/pastoral.png);
+      padding-top: 130px;
+      margin: 0 auto;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+}
+
+
+
+@media screen and (max-width: 100%){
+  .bio{
+    margin-left: 90px;
+  }
+}
 
 
 @media screen and (max-width: 85em){
@@ -718,6 +807,8 @@ form.form_contact input[type="button"]:hover{
       #btnview{
             float: right;
       }
+
+
 }
 
 @media screen and (max-width: 75em){
@@ -746,7 +837,8 @@ form.form_contact input[type="button"]:hover{
       #btnview{
             float: right;
       }
-}
+
+
 
 @media screen and (max-width: 64em){
       .pimg img{
@@ -783,6 +875,8 @@ form.form_contact input[type="button"]:hover{
       #btnview{
             margin-left: 0; 
       }
+
+
 }
 
 
@@ -879,5 +973,19 @@ form.form_contact input[type="button"]:hover{
             text-align: center;
       }
       
+      #sss{
+        text-align: center;
+      }
+
+      #guyimg img{
+        width: 200px;
+        height: 200px
+      }
+
+      .bio{
+        margin-left: -50px;
+        width: 300px;
+      }
+
 }
 

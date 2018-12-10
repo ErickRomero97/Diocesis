@@ -51,55 +51,58 @@
 			</div>
 		</div>	
 	</div>
-	<br><br>
-	<div class="container">
-		<div class="row publicacion">
-			{% for dato in datos %}				
-				{% if request.user.is_active %}
-					<a href="{% url 'principal:editar_diocesis' dato.id %}" class="btn btn-info" id="bp">Editar <span class="glyphicon glyphicon-pencil"></a><br><br>
-				{% endif %}
-				<div class="col-md-5 col-sm-5 col-xs-12">
-					<img src="{{ dato.imagen.url }}" alt="" width="100%">
-				</div>
-				<div class="col-md-7 col-sm-7 col-xs-12">
-					<h1 style="text-align: center">{{dato.nombre}}</h1>
-					<p style="text-align: center">
-						{{ dato.direccion }}
-						<br>
-						{{ dato.email }}
-					</p>
-					<div class="row">
-						<div class="col-md-6 col-xs-6">
-							<h3 style="text-align: center"><strong>Parroquias</strong></h3>
-							<ul>
-								{% for parroquia in dato.parroquia.all %}
-									<li>{{ parroquia }}</li>
-								{% endfor %}
-							</ul>
-						</div>
-						<div class="col-md-6 col-xs-6">
-							<h3 style="text-align: center"><strong>Pastorales</strong></h3>
-							<ul>
-								{% for pastoral in dato.pastoral.all %}
-									<li>{{ pastoral }}</li>
-								{% endfor %}
-							</ul>	
-						</div>						
-					</div>
-				</div>		
-			{% endfor %}
-		</div>
-		<div class="content">
+	
+	<div class="historiatodo">
+		
+		<div class="container" id="historia1">
 			<div class="row publicacion">
-				{% for h in datos %}
-					<div class="col-md-12">
-						<h2 style="text-align: center">Historia</h2>
-						<p id="ptext">
-							{{ h.historia|linebreaks }}
-						</p>
+				{% for dato in datos %}				
+					{% if request.user.is_active %}
+						<a href="{% url 'principal:editar_diocesis' dato.id %}" class="btn btn-info" id="bp">Editar <span class="glyphicon glyphicon-pencil"></a><br><br>
+					{% endif %}
+					<div class="col-md-5 col-sm-5 col-xs-12">
+						<img src="{{ dato.imagen.url }}" alt="" width="100%">
 					</div>
-					<br><br>	
+					<div class="col-md-7 col-sm-7 col-xs-12">
+						<h1 style="text-align: center">{{dato.nombre}}</h1>
+						<p style="text-align: center">
+							{{ dato.direccion }}
+							<br>
+							{{ dato.email }}
+						</p>
+						<div class="row">
+							<div class="col-md-6 col-xs-6">
+								<h3 style="text-align: center"><strong>Parroquias</strong></h3>
+								<ul>
+									{% for parroquia in dato.parroquia.all %}
+										<li>{{ parroquia }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="col-md-6 col-xs-6">
+								<h3 style="text-align: center"><strong>Pastorales</strong></h3>
+								<ul>
+									{% for pastoral in dato.pastoral.all %}
+										<li>{{ pastoral }}</li>
+									{% endfor %}
+								</ul>	
+							</div>						
+						</div>
+					</div>		
 				{% endfor %}
+			</div>
+			<div class="content">
+				<div class="row publicacion">
+					{% for h in datos %}
+						<div class="col-md-12">
+							<h2 style="text-align: center">Historia</h2>
+							<p id="ptext">
+								{{ h.historia|linebreaks }}
+							</p>
+						</div>
+						<br><br>	
+					{% endfor %}
+				</div>
 			</div>
 		</div>
 	</div>

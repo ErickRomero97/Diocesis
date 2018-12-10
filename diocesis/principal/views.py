@@ -17,6 +17,11 @@ from django.core.mail import send_mail
 from django.template.defaultfilters import timesince, linebreaks
 
 def index(request):
+	sacerdote = Empleado.objects.all().count()
+	parroquias = Parroquia.objects.all().count()
+	pastoral1 = Pastoral.objects.all().count()
+	pastoral2 = Pastoral_Diocesi.objects.all().count()
+	pt = int(pastoral1) + int(pastoral2)
 	if request.user.id:
 		empleado = Empleado.objects.get(pk = request.user.id)
 		publicacionForm = PublicacionForm(initial={'empleado': empleado})
@@ -38,6 +43,9 @@ def index(request):
 		'publicaciones': publicaciones,
 		'form': form,
 		'publicacionForm': publicacionForm,
+		'sc': sacerdote,
+		'parroquiasc': parroquias,
+		'pastoralesc': pt,
 	}
 	return render(request, 'index.html', context)
 

@@ -7,7 +7,7 @@
 
 {% block contenido %}
 	
-	<div class="container row" id="sss">
+	<div class="container.responsive row" id="sss">
 		<div id="nuevo_Obispo">
 			{% if request.user.is_staff and estado %}
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formObispo">Nuevo Obispo <span class="glyphicon glyphicon-plus"></span></button><br><br>
@@ -20,7 +20,7 @@
 			<div class="col-md-3" id="guyimg">
 				<img src="/media/{{empleado.imagen}}" alt="...">
 			</div>
-			<div class="bio col-md-8" style="margin-left: 90px;">
+			<div class="bio col-md-8" style="">
 				<h1>{{empleado.nombre}} {{empleado.apellido}}</h1>
 				<hr>
 				<p>{{empleado.biografia|linebreaks}}</p>
@@ -123,8 +123,6 @@
 		</div>
 	</div>
 
-	
-	
 {% endblock  %}
 
 {% block script %}

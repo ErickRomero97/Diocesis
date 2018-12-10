@@ -4,7 +4,7 @@
 
 {% block contenido %}
 	{% load static %}
-	<div class="scontenedor">
+	<div class="" id="pastoral1">
 		<div class="container">
 			<br>
 			<br>
@@ -19,13 +19,13 @@
 				<div class="row">
 					{% for p in pastoral  %}
 						<div class="col-sm-6 col-md-4" id="data_Pastoral-{{p.pk}}">
-						    <div class="thumbnail">
+						    <div class="thumbnail" id="parroquia1">
 						      <img  class="eee" src="/media/{{p.imagen}}" alt="...">
 						      <div class="caption">
-						        <h3><strong>Nombre: </strong>{{p.nombre}}</h3>
-						        <h4><strong>Encargado: </strong>{{p.encargado}}</h4>
-						        <h4><strong>Eslogan: </strong>{{p.eslogan}}</h4>
-						        <h4><strong>Horarios: </strong>{{p.horarios}}</h4>
+						        <h3 style="color:white"><strong>Nombre: </strong>{{p.nombre}}</h3>
+						        <h4 style="color:white"><strong>Encargado: </strong>{{p.encargado}}</h4>
+						        <h4 style="color:white"><strong>Eslogan: </strong>{{p.eslogan}}</h4>
+						        <h4 style="color:white"><strong>Horarios: </strong>{{p.horarios}}</h4>
 						     	 
 						        {% if request.user.is_staff %}
 						          	{% if p.parroquia_set.all.last	 %}
@@ -44,7 +44,7 @@
 									</button>
 								{% else %}
 									{% if p.parroquia_set.all.last	 %}
-							      	 	<h3><strong>Parroquia: </strong>{{p.parroquia_set.all.last.nombre}}</h3>
+							      	 	<h3 style="color:white"><strong>Parroquia: </strong>{{p.parroquia_set.all.last.nombre}}</h3>
 						        	{% endif %}
 						        {% endif %}
 						      </div>
